@@ -29,4 +29,4 @@ users.head()
 #creates dictionary for you
 #from sklearn.preprocessing import LabelEncoder
 #encoder = LabelEncoder()
-#df['type_encoded'] = encoder.fit_transform(df['type'])
+#df['rating_encoded'] = encoder.fit_transform(df['rating'])
