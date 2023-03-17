@@ -67,3 +67,51 @@ users.head()
 #from sklearn.preprocessing import LabelEncoder
 #encoder = LabelEncoder()
 #df['rating_encoded'] = encoder.fit_transform(df['rating'])
+
+#ATTEMPT AT FASTER EVALUATION
+
+#test_arrays
+#ef fast_evaluation():
+    #Find nearest neighbours to test users in trainset 
+    #index_neighbours = neighbours(test_arrays)
+    #percentage_scores = []
+    #print(len(index_neighbours))
+    #print(test_arrays)
+    #for index, i in enumerate(index_neighbours):
+    #    test_arrays_index =test_arrays(index)
+    #    print(test_arrays_index)
+        #username = x.inverse_transform([i[0]])[0]
+        #print(username)
+    #    nframe = sim_frame([i])
+        #print(nframe)
+        #username = list(nframe["username"])
+        #print(username[index])
+    #    user_recommendations = recommendations(nframe, "TV")
+        #print(username, user_recommendations)
+
+        #rt = real_ratings.loc[real_ratings["username"]==username]
+        #print(rt)
+    #    score = 0
+        #Check whether recommended shows are present in original ratings table
+        #for show in user_recommendations:
+        #    a_id = int(real_anime.loc[real_anime["title"]==show]["anime_id"])
+            #u_ratings = real_ratings.loc[real_ratings["username"]==username]
+
+        #    if int(a_id) in list(rt["anime_id"]): #if user watched the recommended show
+        #        rating_row = real_ratings.loc[(real_ratings["username"]==username)&(real_ratings["anime_id"]==a_id)]
+        #        score+=1
+        #        if int(rating_row["my_score"])>=7:#user "likes" the show if they rated it higher than or equal to 7
+        #            score+=1 #add an extra point if the user liked the shower
+
+        #score = (score/10)*100 #max number of points is 10
+        #percentage_scores.append(score)
+        #if user liked show --> give double points
+        #print(f"Score for user {username}: {score}%")
+
+    #percentage_scores = np.array(percentage_scores)
+    #average_score = np.average(percentage_scores)
+    #print(f"Average recommendation score for Test users is {average_score}%")
+    #return average_score
+
+#fast_evaluation()
+#include analysis of distance metric between neighbours e.g. cosine, euclidean 
