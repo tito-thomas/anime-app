@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.4.33213.308
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "anime-site", "anime-site.csproj", "{2EF430E7-1D5F-4D22-BB2B-2B6A78721FD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "anime-site", "anime-site.csproj", "{0F8C8567-303B-4D95-81FB-07CD374631F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2EF430E7-1D5F-4D22-BB2B-2B6A78721FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EF430E7-1D5F-4D22-BB2B-2B6A78721FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EF430E7-1D5F-4D22-BB2B-2B6A78721FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EF430E7-1D5F-4D22-BB2B-2B6A78721FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F8C8567-303B-4D95-81FB-07CD374631F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F8C8567-303B-4D95-81FB-07CD374631F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F8C8567-303B-4D95-81FB-07CD374631F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F8C8567-303B-4D95-81FB-07CD374631F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {53E498A0-3420-4A4D-885D-09B60FCA4DEA}
+		SolutionGuid = {2F64015F-89D8-4F5D-95EE-734FE692AE0E}
 	EndGlobalSection
 EndGlobal
