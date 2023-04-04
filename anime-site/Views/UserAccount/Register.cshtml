@@ -1,0 +1,27 @@
+﻿
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<main aria-labelledby="title">
+    <center>
+        <h2 id="title">@ViewBag.Title.</h2>
+        @using (Html.BeginForm("Register", "UserAccount", FormMethod.Post))
+        {
+
+            <label for="username"> Username</label><br />
+            <input type="text" id="username" name="username" /><br />
+
+            <label for="password"> Password</label><br />
+            <input type="password" id="password" name="password" /><br />
+
+            <label for="confirm-password">Confirm Password</label><br />
+            <input type="password" id="confirm-password" name= "ConfirmPassword"/><br /><br />
+
+            <input type="submit" value="Submit" />
+            <div>@ViewBag.Message</div>
+
+        }
+    </center>
+</main>

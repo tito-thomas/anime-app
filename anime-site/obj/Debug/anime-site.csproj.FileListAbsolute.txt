@@ -1,3 +1,5 @@
+D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.AssemblyReference.cache
+D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.CoreCompileInputs.cache
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\anime-site.dll.config
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\anime-site.dll
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\anime-site.pdb
@@ -51,6 +53,7 @@ D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\roslyn\vbc.rsp
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\roslyn\VBCSCompiler.exe
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\roslyn\VBCSCompiler.exe.config
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\Antlr3.Runtime.dll
+D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\EntityFramework.SqlServer.dll
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\Microsoft.Web.Infrastructure.dll
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\Newtonsoft.Json.dll
@@ -62,6 +65,7 @@ D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\System.Web.WebPages
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\System.Web.WebPages.dll
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\System.Web.WebPages.Razor.dll
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\WebGrease.dll
+D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\EntityFramework.SqlServer.xml
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\System.Web.Helpers.xml
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\System.Web.Mvc.xml
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\System.Web.Optimization.xml
@@ -72,8 +76,6 @@ D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\System.Web.WebPages
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\Newtonsoft.Json.xml
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\Antlr3.Runtime.pdb
 D:\Master File\Year 3\Final Project\anime-app\anime-site\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.AssemblyReference.cache
-D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.CoreCompileInputs.cache
 D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.CopyComplete
 D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.dll
 D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.pdb

@@ -1,0 +1,23 @@
+﻿@model anime_site.Models.UserDetails
+@{
+    ViewBag.Title = "Login";
+}
+
+
+<main aria-labelledby="title">
+    <center>
+
+        <h1>@ViewBag.Title</h1>
+        @using (Html.BeginForm("Login", "UserAccount")) { 
+
+        <label for="username"> Username</label><br />
+        <input type="text" id="username" name="username" /><br />
+
+        <label for="password"> Password</label><br />
+        <input type="password" id="password" name="password" /><br />
+
+        <input type="submit" name="ConfirmPassword" value="Submit"/>
+        <div> @ViewBag.Message</div>
+        }
+    </center>
+</main>
