@@ -5,19 +5,26 @@
 
 
 <main aria-labelledby="title">
-    <center>
 
-        <h1>@ViewBag.Title</h1>
-        @using (Html.BeginForm("Login", "UserAccount")) { 
 
-        <label for="username"> Username</label><br />
-        <input type="text" id="username" name="username" /><br />
+    <h1 class="my-titles">@ViewBag.Title</h1>
+    @using (Html.BeginForm("Login", "UserAccount", FormMethod.Post))
+    {
+        <div class="left-forms">
 
-        <label for="password"> Password</label><br />
-        <input type="password" id="password" name="password" /><br />
+            <label for="username"> Username</label><br />
+            <input type="text" id="username" name="username" /><br />
+            @Html.ValidationMessageFor(u => u.username, "", new { @class = "warning-text" })<br />
 
-        <input type="submit" name="ConfirmPassword" value="Submit"/>
-        <div> @ViewBag.Message</div>
-        }
-    </center>
+            <label for="password"> Password</label><br />
+            <input type="password" id="password" name="password" /><br />
+            @Html.ValidationMessageFor(p => p.password, "", new { @class = "warning-text" })<br />
+            <div class="warning-text"> @ViewBag.Warning</div>
+        </div>
+        <center>
+            <input type="submit" value="Submit" />
+            <div class="warning-text"> @ViewBag.Message</div>
+        </center>
+    }
+
 </main>

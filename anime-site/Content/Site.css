@@ -18,3 +18,27 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.warning-text{
+    color:red;
+    font-size:14px;
+    text-align:left;
+}
+
+.left-forms{
+    display:inline-block;
+    text-align:left;
+}
+
+form{
+    text-align:center;
+    padding:30px;
+}
+
+.reg-success{
+    color:green;
+}
+
+.my-titles{
+    text-align:center;
+}

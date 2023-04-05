@@ -1,27 +1,32 @@
-﻿
+﻿@model anime_site.Models.UserDetails
 
 @{
     ViewBag.Title = "Register";
 }
 
 <main aria-labelledby="title">
-    <center>
-        <h2 id="title">@ViewBag.Title.</h2>
+
+        <h2 class="my-titles" id="title">@ViewBag.Title</h2>
         @using (Html.BeginForm("Register", "UserAccount", FormMethod.Post))
         {
+            <div class="left-forms">
+                <label for="username"> Username</label><br />
+                <input type="text" id="username" name="username" /><br />
+                @Html.ValidationMessageFor(u => u.username, "", new { @class = "warning-text" })<br />
 
-            <label for="username"> Username</label><br />
-            <input type="text" id="username" name="username" /><br />
 
-            <label for="password"> Password</label><br />
-            <input type="password" id="password" name="password" /><br />
+                <label for="password"> Password</label><br />
+                <input type="password" id="password" name="password" /><br />
+                @Html.ValidationMessageFor(x => x.password, "", new { @class = "warning-text" })<br />
+     
 
-            <label for="confirm-password">Confirm Password</label><br />
-            <input type="password" id="confirm-password" name= "ConfirmPassword"/><br /><br />
-
-            <input type="submit" value="Submit" />
-            <div>@ViewBag.Message</div>
-
+                <label for="confirm-password">Confirm Password</label><br />
+                <input type="password" id="confirm-password" name="ConfirmPassword" /><br />
+                <div class="warning-text">@ViewBag.Warning</div>
+            </div>
+            <center><input type="submit" value="Submit" /></center>
+            <div class="reg-success">@ViewBag.SuccessMessage</div>
+       
         }
-    </center>
+
 </main>

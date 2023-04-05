@@ -5,7 +5,9 @@ using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using anime_site.Models;
-
+using System.Security.Cryptography;
+using System.Web.Helpers;
+using Microsoft.Ajax.Utilities;
 
 namespace anime_site.Controllers
 {
@@ -21,23 +23,44 @@ namespace anime_site.Controllers
         [HttpPost]
         public ActionResult Register(UserDetails user)
         {
-            if (ModelState.IsValid) { //check if the username already exists in the database
+            if (ModelState.IsValid) { //model is invalid if one or more fields are blank
                 using (MyDbContext db = new MyDbContext()) {
                     //If the username is taken, try again
-                    if (db.userAccount.Any(i=>i.username == user.username)){
-                        ViewBag.Notification = "This username is taken, please try again";
+                    if (db.userAccount.Any(i => i.username == user.username))
+                    {
+                        ViewBag.Warning = "This username is taken, please try again";
+                        return View();
+                    }
+                    //Password validation
+                    //still need to hash
+                    else if (user.password.Length < 7)
+                    { 
+                      ViewBag.Warning = "Password must be at least 7 characters"; 
+                      return View();
+                    }
+                    else if (user.ConfirmPassword == null)
+                    {
+                        ViewBag.Warning = "Please confirm your password";
+                        return View();
+                    }
+                    else if (user.password != user.ConfirmPassword)
+                    {
+                        ViewBag.Warning = "Passwords do not match";
                         return View();
                     }
                     else
                     {
-                       db.userAccount.Add(user);
-                       db.SaveChanges();
-                       ModelState.Clear();
-                       ViewBag.Message = user.username + " Registered";
+                        //Hash password
+                        var password_hash = Crypto.HashPassword(user.password);
+                        user.password = password_hash;
+                        db.userAccount.Add(user);
+                        db.SaveChanges();
+                        ModelState.Clear();
+                        ViewBag.SuccessMessage = user.username + " registered";
                     }                       
                 }
             }
-            
+            ViewBag.Warning = "Please confirm your password";
             return View();
         }
 
@@ -50,22 +73,37 @@ namespace anime_site.Controllers
         public ActionResult Login(UserDetails user)
         {
             {
-                using (MyDbContext db = new MyDbContext())
+                
+                if (ModelState.IsValid) //model is invalid if one or more fields are blank
                 {
-                    var auth = db.userAccount.Where(i => i.username.Equals(user.username) && i.password.Equals(user.password)).FirstOrDefault();
-                    //var auth = db.userAccount.Single(i => i.username == user.username && i.password == user.password);
-                    if (auth != null)
+                    using (MyDbContext db = new MyDbContext())
                     {
-                        Session["username"] = user.username;
-                        return RedirectToAction("Dashboard","Home");
-                    }                       
-           
-                    else
-                    {
-                        ViewBag.Message = "Incorrect username or password";
-                        return View();
+                        //var current_hashed = Crypto.HashPassword(user.password);
+                        //var auth = db.RegAccount.Where(i => i.username.Equals(user.username) && i.password.Equals(user.password)).FirstOrDefault();
+                        var username_auth = db.userAccount.Where(i => i.username.Equals(user.username)).FirstOrDefault();
+                        if (username_auth != null)
+                        {
+                            var pass_auth = Crypto.VerifyHashedPassword(username_auth.password, user.password);
+
+                            if (pass_auth == true)
+                            {
+                                Session["username"] = user.username;
+                                return RedirectToAction("Dashboard", "Home");
+                            }
+                            else
+                            {
+                                ViewBag.Message = "Incorrect username or password";
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Incorrect username or password";
+                            return View();
+                        }
                     }
                 }
+                return View();
             }
 
         }

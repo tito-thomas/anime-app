@@ -10,6 +10,6 @@ namespace anime_site.Models
     {
 
         public MyDbContext() : base("name=Model1") { }
-        public DbSet<UserDetails> userAccount { get; set; } 
+        public DbSet<UserDetails> userAccount { get; set; }
     }
 }
