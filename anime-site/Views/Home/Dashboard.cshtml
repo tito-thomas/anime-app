@@ -3,6 +3,13 @@
     ViewBag.Title = "Dashboard";
 }
 
-<h2>Dashboard</h2>
+<body>
+    <container>
+        <div class="dash">
+            <h2>@ViewBag.Title</h2>
 
-<h3>Hello @Session["username"].ToString()</h3>
+            <h3>Welcome, @User.Identity.Name</h3>
+    
+        </div>
+    </container>
+</body>

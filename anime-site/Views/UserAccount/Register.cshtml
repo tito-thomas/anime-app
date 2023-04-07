@@ -5,28 +5,34 @@
 }
 
 <main aria-labelledby="title">
+    <div class="form-position">
 
-        <h2 class="my-titles" id="title">@ViewBag.Title</h2>
         @using (Html.BeginForm("Register", "UserAccount", FormMethod.Post))
         {
-            <div class="left-forms">
-                <label for="username"> Username</label><br />
-                <input type="text" id="username" name="username" /><br />
-                @Html.ValidationMessageFor(u => u.username, "", new { @class = "warning-text" })<br />
+            <div class="form-container">
+                <h2 class="form-titles" id="title">@ViewBag.Title</h2>
+                <div class="form-group">
+                    <label for="username"> Username</label><br />
+                    <input type="text" id="username" name="username" /><br />
 
+                    @Html.ValidationMessageFor(u => u.username, "", new { @class = "warning-text" })<br />
+                </div>
 
-                <label for="password"> Password</label><br />
-                <input type="password" id="password" name="password" /><br />
-                @Html.ValidationMessageFor(x => x.password, "", new { @class = "warning-text" })<br />
-     
+                <div class="form-group">
+                    <label for="password"> Password</label><br />
+                    <input type="password" id="password" name="password" /><br />
+                    @Html.ValidationMessageFor(x => x.password, "", new { @class = "warning-text" })<br />
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label><br />
+                    <input type="password" id="confirm-password" name="ConfirmPassword" /><br />
+                    <div class="warning-text">@ViewBag.Warning</div><br />
+                </div>
+                <input type="submit" value="Submit" />
+                <div class="reg-success">@ViewBag.SuccessMessage</div>
 
-                <label for="confirm-password">Confirm Password</label><br />
-                <input type="password" id="confirm-password" name="ConfirmPassword" /><br /><br />
-                <div class="warning-text">@ViewBag.Warning</div>
             </div>
-            <center><input type="submit" value="Submit" /></center>
-            <div class="reg-success">@ViewBag.SuccessMessage</div>
-       
+            
         }
-
+    </div>
 </main>

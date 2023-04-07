@@ -6,28 +6,37 @@
     <title>@ViewBag.Title - Anime Recommendation System</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <!--<script type="module" src="~/Scripts/custom/navbar.js"></script>-->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aldrich" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
+    <div id="mynav" class="navbar-div">
+   
+        <div class="navbar-header">
             @Html.ActionLink("Anime Recommendation System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Login", "Login", "UserAccount", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Register", "Register", "UserAccount", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
-            </div>
         </div>
-    </nav>
-    <div class="container body-content">
+
+
+        <ul class="navitems">
+            <li>@Html.ActionLink("Login", "Login", "UserAccount")</li>
+            <li>@Html.ActionLink("Register", "Register", "UserAccount")</li>
+            <li>@Html.ActionLink("Logout", "Logout", "UserAccount", new { area = "" }, new { @class = "navbar-brand" })</li>
+        </ul>
+
+    </div>
+
+    <div class="myfooter body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+
+        <footer class="footer">
+            <p>&copy; @DateTime.Now.Year Tito Thomas - Developed in C# ASP .NET MVC</p>
         </footer>
     </div>
 

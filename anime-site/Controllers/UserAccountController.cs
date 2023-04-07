@@ -8,6 +8,7 @@ using anime_site.Models;
 using System.Security.Cryptography;
 using System.Web.Helpers;
 using Microsoft.Ajax.Utilities;
+using System.Web.Security;
 
 namespace anime_site.Controllers
 {
@@ -60,7 +61,8 @@ namespace anime_site.Controllers
                     }                       
                 }
             }
-            ViewBag.Warning = "Please confirm your password";
+            else{ViewBag.Warning = "Please confirm your password";}
+            
             return View();
         }
 
@@ -88,6 +90,7 @@ namespace anime_site.Controllers
                             if (pass_auth == true)
                             {
                                 Session["username"] = user.username;
+                                FormsAuthentication.SetAuthCookie(user.username, true);
                                 return RedirectToAction("Dashboard", "Home");
                             }
                             else
@@ -110,9 +113,11 @@ namespace anime_site.Controllers
 
         public ActionResult Logout() 
         {
-
+            FormsAuthentication.SignOut();
             Session.Clear();
-            return View()
+            Session.Abandon();
+            return RedirectToAction("Index","Home")
+                
 ;        }
 
     }
