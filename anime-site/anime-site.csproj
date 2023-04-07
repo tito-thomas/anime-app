@@ -143,6 +143,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Assets\jujutsu.jpg" />
+    <Content Include="Content\Assets\luffy.jpg" />
+    <Content Include="Content\Assets\promisednland.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
