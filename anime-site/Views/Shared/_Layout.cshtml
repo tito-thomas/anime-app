@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <!--<script type="module" src="~/Scripts/custom/navbar.js"></script>-->
+    <script type="module" src="~/Scripts/navbar.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aldrich" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
@@ -20,13 +20,13 @@
     <div id="mynav" class="navbar-div">
    
         <div class="navbar-header">
-            @Html.ActionLink("Anime Recommendation System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Anime Recommendation System", "", "", new { area = "" }, new { @class = "navbar-brand" })
         </div>
 
 
         <ul class="navitems">
-            <li>@Html.ActionLink("Login", "Login", "UserAccount")</li>
-            <li>@Html.ActionLink("Register", "Register", "UserAccount")</li>
+            @*<li>@Html.ActionLink("Login", "Login", "UserAccount")</li>
+            <li>@Html.ActionLink("Register", "Register", "UserAccount")</li>*@
             <li>@Html.ActionLink("Logout", "Logout", "UserAccount", new { area = "" }, new { @class = "navbar-brand" })</li>
         </ul>
 

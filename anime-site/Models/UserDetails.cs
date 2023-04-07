@@ -18,7 +18,9 @@ namespace anime_site.Models
         [Required(ErrorMessage = "Please enter a password")]
         public string password { get; set; }
 
- 
+        //public string userVector { get; set; }
+        public bool IsNew { get; set; }
+
         [NotMapped]
         public string ConfirmPassword { get; set; }
 
