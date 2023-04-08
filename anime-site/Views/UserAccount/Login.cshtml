@@ -9,7 +9,7 @@
 
 
 
-        @using (Html.BeginForm("Login", "UserAccount", FormMethod.Post))
+        @using (Html.BeginForm("Login", "UserAccount", FormMethod.Post, new {spellcheck = "false"}))
         {
             <h1 class="form-titles">@ViewBag.Title</h1>
             <div class="form-container left-forms">
@@ -23,11 +23,10 @@
                     <label for="password"> Password</label><br />
                     <input type="password" id="password" name="password" /><br />
                     @Html.ValidationMessageFor(p => p.password, "", new { @class = "warning-text" })<br />
-                    <div class="warning-text"> @ViewBag.Warning</div><br />
+                    <div class="warning-text"> @ViewBag.Message</div><br />
                 </div>
-
                     <input type="submit" value="Submit" />
-                    <div class="warning-text"> @ViewBag.Message</div>
+                    
             </div>
 
           }

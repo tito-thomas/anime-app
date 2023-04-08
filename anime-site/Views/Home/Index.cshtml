@@ -2,8 +2,21 @@
     ViewBag.Title = "Home Page";
 }
 
-<main>
-    
+<body>
+    <div class = "home-background">
+
+        <main class="home-position">
+            <p class="home-title">Anime Recommendation Center</p>
+            <container class="home-container">
+                <div class="home-button">
+                    @Html.ActionLink("Login", "Login", "UserAccount", new { area = "" }, new { @class = "login-pill" })
+                </div>
+                <div class="home-button">
+                    @Html.ActionLink("Register", "Register", "USerAccount", new { area = "" }, new { @class = "reg-pill" })
+                </div>
+            </container>
 
 
-</main>
+        </main>
+        </div>
+</body>

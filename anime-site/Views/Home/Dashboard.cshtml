@@ -2,14 +2,85 @@
 @{
     ViewBag.Title = "Dashboard";
 }
-
+<head>
+    <title>@ViewBag.Title</title>
+    @section Scripts {
+        <script type="module" src="~/Scripts/movement.js"></script>
+    }
+</head>
 <body>
-    <container>
+    <container class="dash-veil">
         <div class="dash">
-            <h2>@ViewBag.Title</h2>
+            @*<h2>@ViewBag.Title</h2>*@
 
             <h3>Welcome, @User.Identity.Name</h3>
-    
+
         </div>
-    </container>
+
+        <div class="questions">
+            @using (Html.BeginForm("CreateVector", "UserAccount", FormMethod.Post))
+            {
+                <div class="all-questions">
+                    <div class="question-group">
+                        <h2>How often do you watch anime?</h2>
+                        <div class="button-container">
+                            <button class="qbuttons">I am completely new to anime</button>
+                            <button class="qbuttons">I have seen it before but not too familiar</button>
+                            <button class="qbuttons">I watch regularly</button>
+                            <button class="qbuttons">I'm addicted to anime</button>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h2>What is your gender?</h2>
+                        <div class="button-container">
+                            <button class="qbuttons">Male</button>
+                            <button class="qbuttons">Female</button>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h2>Which generation do you belong to?</h2>
+                        <div class="button-container">
+                            <button class="qbuttons">Gen-Aplha (10 or younger)</button>
+                            <button class="qbuttons">Gen-Z (11-28)</button>
+                            <button class="qbuttons">Millenials (29-43)</button>
+                            <button class="qbuttons">Gen X (44-58)</button>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h2>Please pick your three favourite genres of Movie/TV shows</h2>
+                        <div class="button-container">
+                            <button class="qbuttons">I haven't watched anime before</button>
+                            <button class="qbuttons">I have seen it before but not too familiar</button>
+                            <button class="qbuttons">I watch regularly</button>
+                            <button class="qbuttons">I'm addicted to anime</button>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h2>Do you prefer to watch older or newer content?</h2>
+                        <div class="button-container">
+                            <button class="qbuttons">Older</button>
+                            <button class="qbuttons">Newer</button>
+                        </div>
+                    </div>
+                    <input type="submit" class="qsubmit"/>
+                </div>
+                <img src="@Url.Content("/Content/Assets/next.svg")" id="next-button"/> 
+
+            }
+        </div>
+</container>
 </body>
+
+@*Roughly, how often do you watch anime?
+
+    I haven't watched anime before
+
+    I have seen it before but not too familiar
+
+    I watch regularly
+
+    I'm addicted to anime*@

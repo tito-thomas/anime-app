@@ -54,10 +54,12 @@ namespace anime_site.Controllers
                         //Hash password
                         var password_hash = Crypto.HashPassword(user.password);
                         user.password = password_hash;
+                        user.IsNew = true;
                         db.userAccount.Add(user);
                         db.SaveChanges();
                         ModelState.Clear();
                         ViewBag.SuccessMessage = user.username + " registered";
+                        return RedirectToAction("Login", "UserAccount");
                     }                       
                 }
             }
@@ -90,7 +92,13 @@ namespace anime_site.Controllers
                             if (pass_auth == true)
                             {
                                 Session["username"] = user.username;
+                                //Session["user_vector"] = user.user_vector;
                                 FormsAuthentication.SetAuthCookie(user.username, true);
+                                //If the user is new, pass argument that leads to first-time questions being asked
+                                if (username_auth.IsNew)
+                                {
+                                   return RedirectToAction("Dashboard", "Home", new {new_user = true});
+                                }
                                 return RedirectToAction("Dashboard", "Home");
                             }
                             else
@@ -118,7 +126,14 @@ namespace anime_site.Controllers
             Session.Abandon();
             return RedirectToAction("Index","Home")
                 
-;        }
+;       }
+
+        public ActionResult ConstructVector()
+        {
+
+
+            return View();
+        }
 
     }
 }

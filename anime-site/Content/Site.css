@@ -4,8 +4,7 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+ 
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -60,20 +59,23 @@ p {
     color: white;
     font-family: Poppins;
     font-size: 20px;
-
+    display: flex;
+    padding-top: 15px;
+    padding-left: 20px;
 }
 
 .navbar-div {
     width: 100%;
-    display: flex;
+    display: none;
     flex-direction: row;
     column-gap: 30px;
     list-style-type: none;
     position: absolute;
-    background-color: #6fa3d9;
+    /*background-color: #6fa3d9;*/
     width: 100%;
     height: 60px;
-    padding: 10px;
+    /*padding: 20px;*/
+    z-index:3;
 }
 
 .navitems {
@@ -118,11 +120,10 @@ p {
 .footer {
     bottom: 0;
     height: 80px;
-    background-color: #6fa3d9;
-    margin-left: -15px;
-    margin-right: -15px;
+    background: #000000;
     position: fixed;
     width: 100%;
+    opacity: 75%;
 }
 
 .footer p {
@@ -248,7 +249,8 @@ h1{
 .warning-text {
     color: red;
     font-size: 14px;
-    text-align: left
+    text-align: left;
+    width:189px;
 }
 
 .dash {
@@ -263,6 +265,180 @@ h1{
     font-size:50px;
 }
 
-container{
-    width:100%;
+
+.home-background {
+    position: relative;
+    background: rgb(15 108 247 / 10%);
+    height: 1000px;
+}
+
+.home-background::before {
+    content: "";
+    background-image: url("/Content/Assets/luffy.jpg");
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+
+}
+
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12%;
+    height: 600px;
+    width: 500px;
+    margin-right: -30%;
+    width: 600px;
+    opacity: 80%;
+}
+
+.home-position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.login-pill{
+    height: 70px;
+    background-color: white;
+    width: 500px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    text-decoration: none;
+    font-family:Poppins;
+    font-size:20px;
+    color:black;
+}
+
+.reg-pill {
+    height: 70px;
+    width: 500px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    text-decoration: none;
+    font-family: Poppins;
+    font-size: 20px;
+    background-color: #3a43a9;
+    color: white;
+}
+
+.home-button {
+    background-color: black;
+    border-radius: 50px;
+}
+
+.home-title {
+    width: 500px;
+    display: flex;
+    font-family: Poppins;
+    font-size: 60px;
+    color: white;
+    position: relative;
+    right: 30%;
+    text-align: center;
+    top: 20%;
+}
+
+
+.questions {
+    display: flex;
+    justify-content:center;
+    position: fixed;
+    width: 35%;
+    height: 700px;
+    background-color: rgb(255 255 255);
+    transform: translate(93%,-10%);
+    border-radius: 50px;
+    z-index: 5;
+    
+}
+
+.dash-veil {
+    position: relative;
+    height: 1000px;
+    background: rgb(0 0 0 / 40%);
+}
+.dash h3 {
+    z-index: 5;
+    color: black;
+    display: flex;
+    transform: translate(20%);
+}
+    
+
+.dash-veil::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-image: url("/Content/Assets/violet.jpg");
+    opacity: 50%;
+}
+
+.questions h2 {
+    font-family: Poppins;
+    transform: translate(0, 30px);
+    text-align:center;
+}
+
+.qbuttons {
+    border: none;
+    border-radius: 150px;
+    width: 400px;
+    justify-content: center;
+    height: 100px;
+    font-family: poppins;
+}
+
+.button-container {
+    height: 550px;
+    width:400px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+
+}
+
+
+.all-questions {
+    display: flex;
+    flex-direction: row;
+    transform: translate(1200px);
+    column-gap: 200px;
+}
+
+.questions img {
+    vertical-align: middle;
+    width: 59px;
+    height: 40px;
+    transform: translate(1650px, -60px);
+    color: black;
+    cursor:pointer;
+}
+
+.question-group{
+  
+}
+
+.qsubmit{
+    height:100px;
 }
