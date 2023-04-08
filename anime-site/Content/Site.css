@@ -249,7 +249,8 @@ h1{
 .warning-text {
     color: red;
     font-size: 14px;
-    text-align: left
+    text-align: left;
+    width:189px;
 }
 
 .dash {
@@ -354,8 +355,90 @@ h1{
 
 .questions {
     display: flex;
-    position: absolute;
+    justify-content:center;
+    position: fixed;
+    width: 35%;
+    height: 700px;
+    background-color: rgb(255 255 255);
+    transform: translate(93%,-10%);
+    border-radius: 50px;
+    z-index: 5;
+    
+}
+
+.dash-veil {
+    position: relative;
+    height: 1000px;
+    background: rgb(0 0 0 / 40%);
+}
+.dash h3 {
+    z-index: 5;
+    color: black;
+    display: flex;
+    transform: translate(20%);
+}
+    
+
+.dash-veil::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 500px;
-    background-color: rgb(14, 17, 58);
+    height: 100%;
+    z-index: -2;
+    background-image: url("/Content/Assets/violet.jpg");
+    opacity: 50%;
+}
+
+.questions h2 {
+    font-family: Poppins;
+    transform: translate(0, 30px);
+    text-align:center;
+}
+
+.qbuttons {
+    border: none;
+    border-radius: 150px;
+    width: 400px;
+    justify-content: center;
+    height: 100px;
+    font-family: poppins;
+}
+
+.button-container {
+    height: 550px;
+    width:400px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+
+}
+
+
+.all-questions {
+    display: flex;
+    flex-direction: row;
+    transform: translate(1200px);
+    column-gap: 200px;
+}
+
+.questions img {
+    vertical-align: middle;
+    width: 59px;
+    height: 40px;
+    transform: translate(1650px, -60px);
+    color: black;
+    cursor:pointer;
+}
+
+.question-group{
+  
+}
+
+.qsubmit{
+    height:100px;
 }

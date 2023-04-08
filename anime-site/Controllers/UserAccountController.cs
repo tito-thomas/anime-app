@@ -59,6 +59,7 @@ namespace anime_site.Controllers
                         db.SaveChanges();
                         ModelState.Clear();
                         ViewBag.SuccessMessage = user.username + " registered";
+                        return RedirectToAction("Login", "UserAccount");
                     }                       
                 }
             }
