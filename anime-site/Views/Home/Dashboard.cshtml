@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     @section Scripts {
         <script type="module" src="~/Scripts/movement.js"></script>
+        <script type="module" src="~/Scripts/questions.js"></script>
     }
 </head>
 <body>
@@ -18,69 +19,78 @@
         </div>
 
         <div class="questions">
-            @using (Html.BeginForm("CreateVector", "UserAccount", FormMethod.Post))
+            @using (Html.BeginForm("CreateVector", "UserAccount", FormMethod.Post, new {id = "qform"}))
             {
                 <div class="all-questions">
                     <div class="question-group">
+                        <div class="intro-text" id="continue">
+                            Hi there, welcome to the recommendation platform!<br /><br /><br />
+                            Before you get started please answer a few questions so we can learn what interests you.
+                            <div class="qsubmit  next-button">Continue</div>
+                        </div>
+
+                    </div>
+                    <div class="question-group" id="group1">
                         <h2>How often do you watch anime?</h2>
                         <div class="button-container">
-                            <button class="qbuttons">I am completely new to anime</button>
-                            <button class="qbuttons">I have seen it before but not too familiar</button>
-                            <button class="qbuttons">I watch regularly</button>
-                            <button class="qbuttons">I'm addicted to anime</button>
+                            <button type="button" class="qbuttons" value="Newbie">I am completely new to anime</button>
+                            <button type="button" class="qbuttons" value="Regular">I have seen it before but not too familiar</button>
+                            <button type="button" class="qbuttons" value="Active">I watch regularly</button>
+                            <button type="button" class="qbuttons" value="Veteran">I'm addicted to anime</button>
+                            <input type ="hidden" name="v1" id="v1"value=""/>
                         </div>
                     </div>
 
-                    <div class="question-group">
+                    <div class="question-group" id="group2">
                         <h2>What is your gender?</h2>
                         <div class="button-container">
-                            <button class="qbuttons">Male</button>
-                            <button class="qbuttons">Female</button>
+                            <button type="button" class="qbuttons" value="Male">Male</button>
+                            <button type="button" class="qbuttons" value="Female">Female</button>
+                            <input type="hidden" name="v2" id="v2" value="" />
                         </div>
                     </div>
 
-                    <div class="question-group">
+                    <div class="question-group" id="group3">
                         <h2>Which generation do you belong to?</h2>
                         <div class="button-container">
-                            <button class="qbuttons">Gen-Aplha (10 or younger)</button>
-                            <button class="qbuttons">Gen-Z (11-28)</button>
-                            <button class="qbuttons">Millenials (29-43)</button>
-                            <button class="qbuttons">Gen X (44-58)</button>
+                            <button type="button" class="qbuttons" value="Gen Alpha">Gen-Aplha (10 or younger)</button>
+                            <button type="button" class="qbuttons" value="Gen Z">Gen-Z (11-28)</button>
+                            <button type="button" class="qbuttons" value="Millenials">Millenials (29-43)</button>
+                            <button type="button" class="qbuttons" value="Gen X">Gen X (44-58)</button>
+                            <input type="hidden" name="v3" id="v3" value="" />
                         </div>
                     </div>
 
-                    <div class="question-group">
+                    <div class="question-group" id="group4">
                         <h2>Please pick your three favourite genres of Movie/TV shows</h2>
                         <div class="button-container">
-                            <button class="qbuttons">I haven't watched anime before</button>
-                            <button class="qbuttons">I have seen it before but not too familiar</button>
-                            <button class="qbuttons">I watch regularly</button>
-                            <button class="qbuttons">I'm addicted to anime</button>
+                            <button type="button" class="qbuttons" value="Action">Action/Adventure</button>
+                            <button type="button" class="qbuttons" value="Comedy">Comedy</button>
+                            <button type="button" class="qbuttons" value="Romance">Romance</button>
+                            <button type="button" class="qbuttons" value="Newbie">I'm addicted to anime</button>
+                            <input type="hidden" name="v4" id="v4" value="" />
                         </div>
                     </div>
 
-                    <div class="question-group">
+                    <div class="question-group" id="group5">
                         <h2>Do you prefer to watch older or newer content?</h2>
                         <div class="button-container">
-                            <button class="qbuttons">Older</button>
-                            <button class="qbuttons">Newer</button>
+                            <button type="button" class="qbuttons" value="New-Gen">Newer</button>
+                            <button type="button" class="qbuttons" value="Classic">Older</button>
+                            <input type="hidden" name="v5" id="v5" value="" />
+                            <input type="submit" class="qsubmit" />
                         </div>
+
                     </div>
-                    <input type="submit" class="qsubmit"/>
+
                 </div>
-                <img src="@Url.Content("/Content/Assets/next.svg")" id="next-button"/> 
+                <img src="@Url.Content("/Content/Assets/next.svg")" id="next-button" class="next-button"/>
+                <img src="@Url.Content("/Content/Assets/next.svg")" id="back-button" />
 
             }
         </div>
-</container>
+    </container>
 </body>
 
-@*Roughly, how often do you watch anime?
-
-    I haven't watched anime before
-
-    I have seen it before but not too familiar
-
-    I watch regularly
-
-    I'm addicted to anime*@
+@*Hi there, welcome to the recommendation platform.
+    Before you get started please answer a few questions so we can learn what interests you*@

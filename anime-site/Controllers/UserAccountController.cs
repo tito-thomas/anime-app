@@ -128,11 +128,16 @@ namespace anime_site.Controllers
                 
 ;       }
 
-        public ActionResult ConstructVector()
+        public ActionResult CreateVector(FormCollection form)
         {
+            var v1 = Request.Form["v1"];
+            var v2 = Request.Form["v2"];
+            var v3 = Request.Form["v3"];
+            var v4 = Request.Form["v4"];
+            var v5 = Request.Form["v5"];
+            //string vector_values = v1+v2+
 
-
-            return View();
+            return RedirectToAction("Dashboard","Home", new { new_user = false });
         }
 
     }

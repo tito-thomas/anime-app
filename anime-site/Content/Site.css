@@ -274,7 +274,7 @@ h1{
 
 .home-background::before {
     content: "";
-    background-image: url("/Content/Assets/luffy.jpg");
+    background-image: url("/Content/Assets/valley.jpg");
     position: fixed;
     top: 0;
     left: 0;
@@ -355,7 +355,7 @@ h1{
 
 .questions {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     position: fixed;
     width: 35%;
     height: 700px;
@@ -363,7 +363,8 @@ h1{
     transform: translate(93%,-10%);
     border-radius: 50px;
     z-index: 5;
-    
+    overflow:hidden;
+
 }
 
 .dash-veil {
@@ -406,6 +407,9 @@ h1{
     font-family: poppins;
 }
 
+.qbuttons:hover{
+    background-color: #a5deff;
+}
 .button-container {
     height: 550px;
     width:400px;
@@ -422,23 +426,53 @@ h1{
 .all-questions {
     display: flex;
     flex-direction: row;
-    transform: translate(1200px);
+    transform: translate(1500px);
     column-gap: 200px;
 }
 
-.questions img {
+#next-button {
     vertical-align: middle;
     width: 59px;
     height: 40px;
-    transform: translate(1650px, -60px);
+    transform: translate(2000px, -310px);
     color: black;
-    cursor:pointer;
+    cursor: pointer;
+    display: none;
 }
+#back-button {
+    transform: scaleX(-1) translate(-1450px, -360px);
+    display: none;
+    width: 40px;
+    cursor: pointer;
+}
+
 
 .question-group{
   
 }
 
-.qsubmit{
-    height:100px;
+.qsubmit {
+    height: 70px;
+    width: 300px;
+    border-radius: 20px;
+    border-style: none;
+    background-color: rgb(41 47 129);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.intro-text {
+    height: 550px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-family: poppins;
+    text-align:center;
 }
