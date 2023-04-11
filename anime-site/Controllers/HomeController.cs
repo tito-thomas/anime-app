@@ -13,7 +13,7 @@ namespace anime_site.Controllers
         {
             if (User.Identity.IsAuthenticated){
 
-                return RedirectToAction("Dashboard", "UserAccount", new { new_user = false });
+                return RedirectToAction("Dashboard", "UserAccount", new { new_user = true });
  
             }
             return View();               

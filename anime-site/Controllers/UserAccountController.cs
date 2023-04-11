@@ -9,6 +9,8 @@ using System.Security.Cryptography;
 using System.Web.Helpers;
 using Microsoft.Ajax.Utilities;
 using System.Web.Security;
+using System.Collections;
+using Newtonsoft.Json;
 
 namespace anime_site.Controllers
 {
@@ -51,6 +53,7 @@ namespace anime_site.Controllers
                     }
                     else
                     {
+
                         //Hash password
                         var password_hash = Crypto.HashPassword(user.password);
                         user.password = password_hash;
@@ -92,12 +95,23 @@ namespace anime_site.Controllers
                             if (pass_auth == true)
                             {
                                 Session["username"] = user.username;
-                                //Session["user_vector"] = user.user_vector;
                                 FormsAuthentication.SetAuthCookie(user.username, true);
                                 //If the user is new, pass argument that leads to first-time questions being asked
                                 if (username_auth.IsNew)
                                 {
-                                   return RedirectToAction("Dashboard", "UserAccount", new {new_user = true});
+                                    //Save user details to persistent cookie
+                                    UserDetailsDto fields = new UserDetailsDto
+                                    {
+                                        userId = username_auth.userId,
+                                        username = username_auth.username,
+                                        IsNew = username_auth.IsNew
+                                    };
+                                    string data_string = JsonConvert.SerializeObject(fields);
+                                    HttpCookie usercookie = new HttpCookie("usercookie", data_string);
+                                    usercookie.Expires = DateTime.Now.AddDays(1);
+                                    Response.Cookies.Add(usercookie);
+                             
+                                    return RedirectToAction("Dashboard", "UserAccount", new {new_user = true});
                                 }
                                 return RedirectToAction("Dashboard", "UserAccount");
                             }
@@ -142,37 +156,66 @@ namespace anime_site.Controllers
 
         public ActionResult Dashboard(bool new_user = true)
         {
-            //if (new_user)
-            //{
-            //calculate user vector
-            //}
-            ViewBag.Welcome1 = "Hi there, welcome to the recommendation platform!";
-            ViewBag.Welcome2 = "Before you get started please answer a few questions so we can learn what interests you.";
+            if (new_user)
+            {
+                ViewBag.Welcome1 = "Hi there, welcome to the recommendation platform!";
+                ViewBag.Welcome2 = "Before you get started please answer a few questions so we can learn what interests you.";
+                return View();
+            }
             return View();
+ 
         }
         [HttpPost]
         public ActionResult Dashboard(NewQuestions form)
         {
-            string genres = form.v4;
+            //Retrieve user data from cookie
+            HttpCookie user = Request.Cookies["usercookie"];
+            string user_data = user.Value;
+            Dictionary<string, object> user_vals = JsonConvert.DeserializeObject<Dictionary<string, object>>(user_data);
 
-            if (ModelState.IsValid) //& form.v4 == 3)
-            {
-                var v1 = form.v1;
-                var v2 = form.v2;
-                var v3 = form.v3;
-                var v4 = form.v4;
-                var v5 = form.v5;
-                //string vector_values = v1+v2+
+            int userId = Convert.ToInt32(user_vals["userId"]);
+            string user_name = user_vals["username"].ToString();
+            bool new_user = Convert.ToBoolean(user_vals["IsNew"]);  
 
-                return RedirectToAction("Dashboard", "Home", new { new_user = false });
-            }
-            else
+            using (MyDbContext db = new MyDbContext())
             {
-                //User didnt fill out all fields. Take them back to the dashboard to try again.
-                ViewBag.Welcome1 = "Please make sure you fill out all fields";
-                ViewBag.Welcome2 = "";
-                //return RedirectToAction("Dashboard","Home");
-                return View();
+                string genres = form.v4;
+                List<string> genre_list = new List<string>();
+                if (genres != null)
+                {
+                    string[] items = genres.Split(',');
+
+                    foreach (string i in items)
+                    {
+                        genre_list.Add(i);
+                    }
+                }
+                if (ModelState.IsValid & genre_list.Count == 3)
+                {
+                    //Get username for encoding
+                    string username = User.Identity.Name;
+                    var v1 = form.v1;
+                    var v2 = form.v2;
+                    var v3 = form.v3;
+                    var v4 = form.v4;
+                    var v5 = form.v5;
+                    //string vector_values = v1+v2+
+
+                    //changing the user IsNew value to false
+                    var currentuser = db.userAccount.Find(userId);
+                    currentuser.IsNew = false;
+                    db.SaveChanges();
+                    ModelState.Clear();
+                    return RedirectToAction("Dashboard", "UserAccount", new { new_user = false });
+                }
+                else
+                {
+                    //User didnt fill out all fields. Take them back to the dashboard to try again.
+                    ViewBag.Welcome1 = "Please make sure you fill out all fields";
+                    ViewBag.Welcome2 = "";
+                    //return RedirectToAction("Dashboard","Home");
+                    return View();
+                }
             }
         }
 

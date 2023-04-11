@@ -141,6 +141,7 @@
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\NewQuestions.cs" />
     <Compile Include="Models\UserDetails.cs" />
+    <Compile Include="Models\UserDetailsDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
