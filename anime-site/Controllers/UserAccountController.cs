@@ -97,9 +97,9 @@ namespace anime_site.Controllers
                                 //If the user is new, pass argument that leads to first-time questions being asked
                                 if (username_auth.IsNew)
                                 {
-                                   return RedirectToAction("Dashboard", "Home", new {new_user = true});
+                                   return RedirectToAction("Dashboard", "UserAccount", new {new_user = true});
                                 }
-                                return RedirectToAction("Dashboard", "Home");
+                                return RedirectToAction("Dashboard", "UserAccount");
                             }
                             else
                             {
@@ -128,7 +128,7 @@ namespace anime_site.Controllers
                 
 ;       }
 
-        public ActionResult CreateVector(FormCollection form)
+        /*public ActionResult CreateVector(FormCollection form)
         {
             var v1 = Request.Form["v1"];
             var v2 = Request.Form["v2"];
@@ -138,7 +138,44 @@ namespace anime_site.Controllers
             //string vector_values = v1+v2+
 
             return RedirectToAction("Dashboard","Home", new { new_user = false });
+        }*/
+
+        public ActionResult Dashboard(bool new_user = true)
+        {
+            //if (new_user)
+            //{
+            //calculate user vector
+            //}
+            ViewBag.Welcome1 = "Hi there, welcome to the recommendation platform!";
+            ViewBag.Welcome2 = "Before you get started please answer a few questions so we can learn what interests you.";
+            return View();
         }
+        [HttpPost]
+        public ActionResult Dashboard(NewQuestions form)
+        {
+            string genres = form.v4;
+
+            if (ModelState.IsValid) //& form.v4 == 3)
+            {
+                var v1 = form.v1;
+                var v2 = form.v2;
+                var v3 = form.v3;
+                var v4 = form.v4;
+                var v5 = form.v5;
+                //string vector_values = v1+v2+
+
+                return RedirectToAction("Dashboard", "Home", new { new_user = false });
+            }
+            else
+            {
+                //User didnt fill out all fields. Take them back to the dashboard to try again.
+                ViewBag.Welcome1 = "Please make sure you fill out all fields";
+                ViewBag.Welcome2 = "";
+                //return RedirectToAction("Dashboard","Home");
+                return View();
+            }
+        }
+
 
     }
 }

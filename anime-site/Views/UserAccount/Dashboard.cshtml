@@ -1,4 +1,4 @@
-﻿
+﻿@model anime_site.Models.NewQuestions
 @{
     ViewBag.Title = "Dashboard";
 }
@@ -19,14 +19,15 @@
         </div>
 
         <div class="questions">
-            @using (Html.BeginForm("CreateVector", "UserAccount", FormMethod.Post, new {id = "qform"}))
+            @using (Html.BeginForm("Dashboard", "UserAccount", FormMethod.Post, new { id = "qform" }))
             {
+            
                 <div class="all-questions">
                     <div class="question-group">
-                        <div class="intro-text" id="continue">
-                            Hi there, welcome to the recommendation platform!<br /><br /><br />
-                            Before you get started please answer a few questions so we can learn what interests you.
-                            <div class="qsubmit  next-button">Continue</div>
+                        <div class="intro-text" id="welcome">
+                            @ViewBag.Welcome1<br /><br /><br />
+                            @ViewBag.Welcome2 
+                            <div class="qsubmit  next-button" id="continue">Continue</div>
                         </div>
 
                     </div>
@@ -37,7 +38,7 @@
                             <button type="button" class="qbuttons" value="Regular">I have seen it before but not too familiar</button>
                             <button type="button" class="qbuttons" value="Active">I watch regularly</button>
                             <button type="button" class="qbuttons" value="Veteran">I'm addicted to anime</button>
-                            <input type ="hidden" name="v1" id="v1"value=""/>
+                            <input type="hidden" name="v1" id="v1" value="" />
                         </div>
                     </div>
 
@@ -84,7 +85,7 @@
                     </div>
 
                 </div>
-                <img src="@Url.Content("/Content/Assets/next.svg")" id="next-button" class="next-button"/>
+                <img src="@Url.Content("/Content/Assets/next.svg")" id="next-button" class="next-button" />
                 <img src="@Url.Content("/Content/Assets/next.svg")" id="back-button" />
 
             }

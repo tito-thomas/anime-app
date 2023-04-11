@@ -13,19 +13,19 @@ namespace anime_site.Controllers
         {
             if (User.Identity.IsAuthenticated){
 
-                return RedirectToAction("Dashboard", "Home", new { new_user = false });
+                return RedirectToAction("Dashboard", "UserAccount", new { new_user = false });
  
             }
             return View();               
         }
 
-        public ActionResult Dashboard(bool new_user)
-        {
+        //public ActionResult Dashboard(bool new_user=true)
+        //{
             //if (new_user)
             //{
                 //calculate user vector
             //}
-            return View();
-        }
+        //    return View();
+        //}
     }
 }

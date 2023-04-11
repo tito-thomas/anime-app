@@ -45,7 +45,7 @@ buttons2.forEach(function (i) {
         value2 = i.value;
         hiddeninput2.value = value2;
 
-        //Any new selection, highlight new button, declour previous
+        //Any new selection, highlight new button, decolour previous
         if ((selected2[i.value] == 0 || !(i.value in selected2)) & prev2 != null) {
             i.style.backgroundColor = "rgb(79 91 255)";
             i.style.color = "white";
@@ -53,7 +53,7 @@ buttons2.forEach(function (i) {
 
             prev2.style.backgroundColor = "#F0F0F0";
             prev2.style.color = "black";
-            selected2[prev1.value] = 0;
+            selected2[prev2.value] = 0;
             prev2 = i
         }
         //First time selection - change colour
@@ -103,35 +103,29 @@ buttons3.forEach(function (i) {
 
 const buttons4 = document.querySelectorAll("#group4 button")
 const hiddeninput4 = document.querySelector("#v4")
-let value4 = "";
-var selected4 = {};
-var prev4;
+
+var selected4 = [];
+let count = 0;
 buttons4.forEach(function (i) {
     i.addEventListener("click", function () {
-        value4 = i.value;
-        hiddeninput4.value = value4;
 
-        //Any new selection, highlight new button, declour previous
-        if ((selected4[i.value] == 0 || !(i.value in selected4)) & prev4 != null) {
+        if (selected4.includes(i.value)) {
+            var index = selected4.indexOf(i.value);
+            i.style.backgroundColor = "#F0F0F0";
+            i.style.color = "black";
+            selected4.splice(index, 1);
+            count -= 1
+        }
+        else if (!(i.value in selected4) & count<3) {
             i.style.backgroundColor = "rgb(79 91 255)";
             i.style.color = "white";
-            selected4[i.value] = 1;
-
-            prev4.style.backgroundColor = "#F0F0F0";
-            prev4.style.color = "black";
-            selected4[prev4.value] = 0;
-            prev4 = i
+            selected4.push(i.value);
+            count += 1;
         }
-        //First time selection - change colour
-        else if (selected4[i.value] == 0 || !(i.value in selected4) & prev4 == null) {
-            i.style.backgroundColor = "rgb(79 91 255)";
-            i.style.color = "white";
-            selected4[i.value] = 1;
-            prev4 = i
-        }
+        console.log(count)
+        hiddeninput4.value = selected4;
     })
 })
-
 
 const buttons5 = document.querySelectorAll("#group5 button")
 const hiddeninput5 = document.querySelector("#v5")

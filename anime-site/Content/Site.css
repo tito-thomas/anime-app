@@ -410,6 +410,10 @@ h1{
 .qbuttons:hover{
     background-color: #a5deff;
 }
+
+.qbuttons-hover {
+    background-color: #a5deff;
+}
 .button-container {
     height: 550px;
     width:400px;
@@ -475,4 +479,20 @@ h1{
     font-size: 30px;
     font-family: poppins;
     text-align:center;
+}
+
+#continue{
+    cursor:pointer;
+}
+
+.alert-msg {
+    height: 100px;
+    width: 250px;
+    display: flex;
+    position: absolute;
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    transform: translate(0, 250px);
 }
