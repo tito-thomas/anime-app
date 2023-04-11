@@ -11,6 +11,7 @@ using Microsoft.Ajax.Utilities;
 using System.Web.Security;
 using System.Collections;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace anime_site.Controllers
 {
@@ -192,13 +193,14 @@ namespace anime_site.Controllers
                 }
                 if (ModelState.IsValid & genre_list.Count == 3)
                 {
-                    //Get username for encoding
+                    //Declare user features for encoding
                     string username = User.Identity.Name;
-                    var v1 = form.v1;
-                    var v2 = form.v2;
-                    var v3 = form.v3;
-                    var v4 = form.v4;
-                    var v5 = form.v5;
+                    string experience = form.v1;
+                    string gender = form.v2;
+                    string generation = form.v3;
+                    string fav_anime_period = form.v5;
+                    var fav_genres = form.v4;
+
                     //string vector_values = v1+v2+
 
                     //changing the user IsNew value to false
@@ -206,6 +208,23 @@ namespace anime_site.Controllers
                     currentuser.IsNew = false;
                     db.SaveChanges();
                     ModelState.Clear();
+
+                    //Run k-neighbours
+                    string file = @"C:\Final Project\anime-app\new_user.py";
+                    string py = @"C:\Users\\titot\AppData\Local\Programs\Python\Python311\python.exe";
+                    Process proc = new Process();
+                    proc.StartInfo = new ProcessStartInfo(py, file)
+                    {
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        Arguments = $"new_user.py new_user {experience}"
+                    };
+                    proc.Start();
+                    string output = proc.StandardOutput.ReadToEnd();
+                    proc.WaitForExit();
+                    
+
                     return RedirectToAction("Dashboard", "UserAccount", new { new_user = false });
                 }
                 else
