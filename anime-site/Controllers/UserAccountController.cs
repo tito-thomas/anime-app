@@ -12,6 +12,9 @@ using System.Web.Security;
 using System.Collections;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.IO;
+using System.Configuration;
+using System.CodeDom.Compiler;
 
 namespace anime_site.Controllers
 {
@@ -98,19 +101,19 @@ namespace anime_site.Controllers
                                 Session["username"] = user.username;
                                 FormsAuthentication.SetAuthCookie(user.username, true);
                                 //If the user is new, pass argument that leads to first-time questions being asked
+                                //Save user details to persistent cookie
+                                UserDetailsDto fields = new UserDetailsDto
+                                {
+                                    userId = username_auth.userId,
+                                    username = username_auth.username,
+                                    IsNew = username_auth.IsNew
+                                };
+                                string data_string = JsonConvert.SerializeObject(fields);
+                                HttpCookie usercookie = new HttpCookie("usercookie", data_string);
+                                usercookie.Expires = DateTime.Now.AddDays(1);
+                                Response.Cookies.Add(usercookie);
                                 if (username_auth.IsNew)
                                 {
-                                    //Save user details to persistent cookie
-                                    UserDetailsDto fields = new UserDetailsDto
-                                    {
-                                        userId = username_auth.userId,
-                                        username = username_auth.username,
-                                        IsNew = username_auth.IsNew
-                                    };
-                                    string data_string = JsonConvert.SerializeObject(fields);
-                                    HttpCookie usercookie = new HttpCookie("usercookie", data_string);
-                                    usercookie.Expires = DateTime.Now.AddDays(1);
-                                    Response.Cookies.Add(usercookie);
                              
                                     return RedirectToAction("Dashboard", "UserAccount", new {new_user = true});
                                 }
@@ -185,8 +188,8 @@ namespace anime_site.Controllers
                 if (genres != null)
                 {
                     string[] items = genres.Split(',');
-
                     foreach (string i in items)
+
                     {
                         genre_list.Add(i);
                     }
@@ -194,6 +197,7 @@ namespace anime_site.Controllers
                 if (ModelState.IsValid & genre_list.Count == 3)
                 {
                     //Declare user features for encoding
+                    List<string> user_features = new List<string>();
                     string username = User.Identity.Name;
                     string experience = form.v1;
                     string gender = form.v2;
@@ -209,23 +213,26 @@ namespace anime_site.Controllers
                     db.SaveChanges();
                     ModelState.Clear();
 
-                    //Run k-neighbours
+                    //Create user vector and then run k-neighbours
                     string file = @"C:\Final Project\anime-app\new_user.py";
                     string py = @"C:\Users\\titot\AppData\Local\Programs\Python\Python311\python.exe";
-                    Process proc = new Process();
-                    proc.StartInfo = new ProcessStartInfo(py, file)
+                    //Process proc = new Process();
+                    ProcessStartInfo p = new ProcessStartInfo();
+                    p.FileName = py;
+                    p.Arguments = $"\"{file}\" \"{username}\" \"{experience}\" \"{gender}\" \"{generation}\" \"{fav_anime_period}\" \"{fav_genres}";
+                    p.UseShellExecute = false;
+                    p.CreateNoWindow = true;
+                    p.RedirectStandardOutput = true; 
+                    p.RedirectStandardError = true;
+                    var e = "";
+                    var r = "";
+                    using(var proc = Process.Start(p))
                     {
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        Arguments = $"new_user.py new_user {experience}"
-                    };
-                    proc.Start();
-                    string output = proc.StandardOutput.ReadToEnd();
-                    proc.WaitForExit();
-                    
+                        e = proc.StandardError.ReadToEnd();
+                        r = proc.StandardOutput.ReadToEnd();
+                    }
 
-                    return RedirectToAction("Dashboard", "UserAccount", new { new_user = false });
+                return RedirectToAction("Dashboard", "UserAccount", new { new_user = false });
                 }
                 else
                 {
