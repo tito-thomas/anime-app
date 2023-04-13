@@ -49,12 +49,16 @@ def new_user(username, experience, gender, generation, fav_anime_period, fav_gen
     v.reset_index(drop=True, inplace=True)
     #print(v)
     user_vectors = pd.concat([user_vectors,v], ignore_index="True")
-    enc = encoder.fit_transform(user_vectors["username"])
+    #Drop username column so it doesnt affect k-neighbours
+    user_vectors = user_vectors.drop("username",axis=1)
+
+    #enc = encoder.fit_transform(user_vectors["username"])
     #print(f"{current_user}")
-    user_vectors["username"] = enc
+    #user_vectors["username"] = enc
     current_user = user_vectors.tail(1)
     #print(current_user)
     dump(encoder, r"C:\Final Project\anime-app\encoders\username.pkl")
+    #print(user_vectors.iloc[241])
     return user_vectors, current_user
 
 #print(new_user(username, experience, gender, generation, fav_anime_period, fav_genres))
@@ -65,27 +69,31 @@ def new_user(username, experience, gender, generation, fav_anime_period, fav_gen
 #function that returns a list of indexes of most similar users in "final_arrays" array
 def neighbours(user, final_arrays):
     nc = NearestNeighbors(n_neighbors = 6, metric="cosine") #change to 6 and slice when done
+    original = final_arrays
     final_arrays = final_arrays.values
-    #print(final_arrays)
+    #print(final_arrays[241])
     train = nc.fit(final_arrays) 
     print("fit worked")
     #print(user[0])
     n = train.kneighbors([user[0]], return_distance = False)
 
     n = [list(n[0][1:])]
-
+    print(n)
+    #print(original.iloc[241])
     return n, final_arrays
 
 #returns a dataframe of users that were in k-nearest neighbours list 
 def sim_frame(neighbours, final_arrays):
     users = pd.read_csv(r"D:\dataset\encoding\user_frame.csv")
     sim_names = []
-    u = load(r"C:\Final Project\anime-app\encoders\username.pkl")
-    #print(neighbours[0])
+    #u = load(r"C:\Final Project\anime-app\encoders\username.pkl")
+
     for i in neighbours[0]: #loop through nested array
         #print(final_arrays[i][0])
-        name = u.inverse_transform([final_arrays[i][0]]) #find usernames of similar users
-    
+        name = users.iloc[i]["username"]
+        print(name)
+        #name = u.inverse_transform([final_arrays[i][0]]) #find usernames of similar users
+        #print(final_arrays[i][2], name)
         sim_names.append(name)
 
     #build new dataframe of neighbours
@@ -94,7 +102,7 @@ def sim_frame(neighbours, final_arrays):
         neighbour_frame[i] = None
 
     for name in sim_names:
-        user_row = users.loc[users["username"]==name[0]]
+        user_row = users.loc[users["username"]==name]
         neighbour_frame = pd.concat([neighbour_frame, user_row])
 
     pd.options.display.max_rows = 999

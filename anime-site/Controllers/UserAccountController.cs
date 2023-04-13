@@ -205,8 +205,6 @@ namespace anime_site.Controllers
                     string fav_anime_period = form.v5;
                     var fav_genres = form.v4;
 
-                    //string vector_values = v1+v2+
-
                     //changing the user IsNew value to false
                     var currentuser = db.userAccount.Find(userId);
                     currentuser.IsNew = false;
