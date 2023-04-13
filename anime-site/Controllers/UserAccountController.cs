@@ -115,9 +115,9 @@ namespace anime_site.Controllers
                                 if (username_auth.IsNew)
                                 {
                              
-                                    return RedirectToAction("Dashboard", "UserAccount", new {new_user = true});
+                                    return RedirectToAction("Welcome", "UserAccount");
                                 }
-                                return RedirectToAction("Dashboard", "UserAccount");
+                                return RedirectToAction("Dashboard", "Home");
                             }
                             else
                             {
@@ -146,31 +146,23 @@ namespace anime_site.Controllers
                 
 ;       }
 
-        /*public ActionResult CreateVector(FormCollection form)
-        {
-            var v1 = Request.Form["v1"];
-            var v2 = Request.Form["v2"];
-            var v3 = Request.Form["v3"];
-            var v4 = Request.Form["v4"];
-            var v5 = Request.Form["v5"];
-            //string vector_values = v1+v2+
+        public ActionResult Welcome()
+        {   
+            ViewBag.Welcome1 = "Hi there, welcome to the recommendation platform!";
+            ViewBag.Welcome2 = "Before you get started please answer a few questions so we can learn what interests you.";
 
-            return RedirectToAction("Dashboard","Home", new { new_user = false });
-        }*/
+            //Retrieve user data from cookie
+            HttpCookie user = Request.Cookies["usercookie"];
+            string user_data = user.Value;
+            Dictionary<string, object> user_vals = JsonConvert.DeserializeObject<Dictionary<string, object>>(user_data);
+            bool new_user = Convert.ToBoolean(user_vals["IsNew"]);
+            if (!new_user) { return RedirectToAction("Dashboard", "Home"); }
 
-        public ActionResult Dashboard(bool new_user = true)
-        {
-            if (new_user)
-            {
-                ViewBag.Welcome1 = "Hi there, welcome to the recommendation platform!";
-                ViewBag.Welcome2 = "Before you get started please answer a few questions so we can learn what interests you.";
-                return View();
-            }
             return View();
  
         }
         [HttpPost]
-        public ActionResult Dashboard(NewQuestions form)
+        public ActionResult Welcome(NewQuestions form)
         {
             //Retrieve user data from cookie
             HttpCookie user = Request.Cookies["usercookie"];
@@ -194,7 +186,7 @@ namespace anime_site.Controllers
                         genre_list.Add(i);
                     }
                 }
-                if (ModelState.IsValid & genre_list.Count == 3)
+                if (ModelState.IsValid & genre_list.Count >= 3)
                 {
                     //Declare user features for encoding
                     List<string> user_features = new List<string>();
@@ -211,7 +203,12 @@ namespace anime_site.Controllers
                     db.SaveChanges();
                     ModelState.Clear();
 
-                    //Create user vector and then run k-neighbours
+                    //Updating the cookie with the new IsNew value
+                    user_vals["IsNew"] = false;
+                    user.Value = JsonConvert.SerializeObject(user_vals);
+                    Response.SetCookie(user);
+
+                    //Run python script to create user vector and then run k-neighbours
                     string file = @"C:\Final Project\anime-app\new_user.py";
                     string py = @"C:\Users\\titot\AppData\Local\Programs\Python\Python311\python.exe";
                     //Process proc = new Process();
@@ -229,15 +226,15 @@ namespace anime_site.Controllers
                         e = proc.StandardError.ReadToEnd();
                         r = proc.StandardOutput.ReadToEnd();
                     }
-
-                return RedirectToAction("Dashboard", "UserAccount", new { new_user = false });
+                    return RedirectToAction("Dashboard", "Home");
+                    //return RedirectToAction("Welcome", "UserAccount", new { new_user = false });
                 }
                 else
                 {
-                    //User didnt fill out all fields. Take them back to the dashboard to try again.
+                    //User didnt fill out all fields. Take them back to the Welcome to try again.
                     ViewBag.Welcome1 = "Please make sure you fill out all fields";
                     ViewBag.Welcome2 = "";
-                    //return RedirectToAction("Dashboard","Home");
+                    //return RedirectToAction("Welcome","Home");
                     return View();
                 }
             }

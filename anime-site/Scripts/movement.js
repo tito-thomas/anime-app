@@ -23,7 +23,7 @@ function checkLoggedIn() {
 
     var url = document.URL.split('/')
     //Check if user is logged in
-    if (document.URL.includes("Dashboard")) {
+    if (document.URL.includes("Welcome")) {
         const navbar = document.querySelector("#mynav")
         navbar.style.display = "flex"
         navbar.style.backgroundColor = "#0e113a"

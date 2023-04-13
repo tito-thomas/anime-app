@@ -1,6 +1,6 @@
 ﻿@model anime_site.Models.NewQuestions
 @{
-    ViewBag.Title = "Dashboard";
+    ViewBag.Title = "Welcome";
 }
 <head>
     <title>@ViewBag.Title</title>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="questions">
-            @using (Html.BeginForm("Dashboard", "UserAccount", FormMethod.Post, new { id = "qform" }))
+            @using (Html.BeginForm("Welcome", "UserAccount", FormMethod.Post, new { id = "qform" }))
             {
             
                 <div class="all-questions">
@@ -65,11 +65,21 @@
 
                     <div class="question-group" id="group4">
                         <h2>Please pick your three favourite genres of Movie/TV shows</h2>
-                        <div class="button-container">
-                            <button type="button" class="qbuttons" value="Action">Action/Adventure</button>
-                            <button type="button" class="qbuttons" value="Comedy">Comedy</button>
-                            <button type="button" class="qbuttons" value="Romance">Romance</button>
-                            <button type="button" class="qbuttons" value="Shounen">Shounen</button>
+                        <div class="genre-container">
+                            <button type="button" class="genre-buttons" value="Action">Action</button>
+                            <button type="button" class="genre-buttons" value="Adventure,Shounen">Adventure</button>
+                            <button type="button" class="genre-buttons" value="Comedy">Comedy</button>
+                            <button type="button" class="genre-buttons" value="Kids">Family</button>
+                            <button type="button" class="genre-buttons" value="Sci-Fi,Supernatural">Sci-Fi</button>
+                            <button type="button" class="genre-buttons" value="Fantasy,Magic">Fantasy</button>
+                            <button type="button" class="genre-buttons" value="Drama,Slice of Life">Drama</button>
+                            <button type="button" class="genre-buttons" value="Romance">Romance</button>
+                            <button type="button" class="genre-buttons" value="Horror">Horror</button>
+                            <button type="button" class="genre-buttons" value="Thriller">Thriller</button>
+                            <button type="button" class="genre-buttons" value="Sports">Sports</button>
+                            <button type="button" class="genre-buttons" value="Music">Music</button>
+                            <button type="button" class="genre-buttons" value="Psychological">Psychological</button>
+
                             <input type="hidden" name="v4" id="v4" value="" />
                         </div>
                     </div>
@@ -93,6 +103,3 @@
         </div>
     </container>
 </body>
-
-@*Hi there, welcome to the recommendation platform.
-    Before you get started please answer a few questions so we can learn what interests you*@

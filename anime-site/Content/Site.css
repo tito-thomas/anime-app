@@ -496,3 +496,26 @@ h1{
     color: red;
     transform: translate(0, 250px);
 }
+
+.genre-buttons {
+    border: none;
+    border-radius: 150px;
+    width: 300px;
+    justify-content: center;
+    /* height: 200px; */
+    font-family: poppins;
+    transform: translateY(100px);
+}
+
+.genre-container {
+    height: 500px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    transform: translateY(50px);
+    overflow-y: auto;
+}

@@ -126,7 +126,7 @@ def get_anime(neighbours, media_type):
         
         #There may be 0 movies in the user's top 10 list in which case we skip that user's recommendationan
         if len(show_ratings) > 1:
-            top_rated = show_ratings.iloc[0]["title"] #change to ids when creating the website to lookup the anime
+            top_rated = show_ratings.iloc[0]["title"].encode("utf-8") #change to ids when creating the website to lookup the anime
             suggestions.append(top_rated)
             #print(top_rated)
 
