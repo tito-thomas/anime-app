@@ -53,7 +53,7 @@ def new_user(username, experience, gender, generation, fav_anime_period, fav_gen
     #print(f"{current_user}")
     user_vectors["username"] = enc
     current_user = user_vectors.tail(1)
-    print(current_user)
+    #print(current_user)
     dump(encoder, r"C:\Final Project\anime-app\encoders\username.pkl")
     return user_vectors, current_user
 
@@ -66,9 +66,9 @@ def new_user(username, experience, gender, generation, fav_anime_period, fav_gen
 def neighbours(user, final_arrays):
     nc = NearestNeighbors(n_neighbors = 6, metric="cosine") #change to 6 and slice when done
     final_arrays = final_arrays.values
-    print(final_arrays)
+    #print(final_arrays)
     train = nc.fit(final_arrays) 
-    #print("fit worked")
+    print("fit worked")
     #print(user[0])
     n = train.kneighbors([user[0]], return_distance = False)
 
@@ -139,7 +139,14 @@ def get_recommendations(username, experience, gender, generation, fav_anime_peri
 
 print(get_recommendations(username, experience, gender, generation, fav_anime_period, fav_genres))
 
+#map genres
+#Find sevral traditional genres e.g. action/adventure
+#If they pick that option fill out the fav_genres that way
+
+
+
 #rewrite to make it not use "username as its affecting results"
 #1. find the iloc of the nearest neighbour ids in user_vectors
 #2. use the iloc in uservectors to find the users in user_frame
 #3. get username
+#2 1 4 124 1 options
