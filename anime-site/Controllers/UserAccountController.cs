@@ -9,6 +9,12 @@ using System.Security.Cryptography;
 using System.Web.Helpers;
 using Microsoft.Ajax.Utilities;
 using System.Web.Security;
+using System.Collections;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using System.IO;
+using System.Configuration;
+using System.CodeDom.Compiler;
 
 namespace anime_site.Controllers
 {
@@ -51,6 +57,7 @@ namespace anime_site.Controllers
                     }
                     else
                     {
+
                         //Hash password
                         var password_hash = Crypto.HashPassword(user.password);
                         user.password = password_hash;
@@ -92,12 +99,23 @@ namespace anime_site.Controllers
                             if (pass_auth == true)
                             {
                                 Session["username"] = user.username;
-                                //Session["user_vector"] = user.user_vector;
                                 FormsAuthentication.SetAuthCookie(user.username, true);
                                 //If the user is new, pass argument that leads to first-time questions being asked
+                                //Save user details to persistent cookie
+                                UserDetailsDto fields = new UserDetailsDto
+                                {
+                                    userId = username_auth.userId,
+                                    username = username_auth.username,
+                                    IsNew = username_auth.IsNew
+                                };
+                                string data_string = JsonConvert.SerializeObject(fields);
+                                HttpCookie usercookie = new HttpCookie("usercookie", data_string);
+                                usercookie.Expires = DateTime.Now.AddDays(1);
+                                Response.Cookies.Add(usercookie);
                                 if (username_auth.IsNew)
                                 {
-                                   return RedirectToAction("Dashboard", "Home", new {new_user = true});
+                             
+                                    return RedirectToAction("Welcome", "UserAccount");
                                 }
                                 return RedirectToAction("Dashboard", "Home");
                             }
@@ -128,12 +146,100 @@ namespace anime_site.Controllers
                 
 ;       }
 
-        public ActionResult ConstructVector()
-        {
+        public ActionResult Welcome()
+        {   
+            ViewBag.Welcome1 = "Hi there, welcome to the recommendation platform!";
+            ViewBag.Welcome2 = "Before you get started please answer a few questions so we can learn what interests you.";
 
+            //Retrieve user data from cookie
+            HttpCookie user = Request.Cookies["usercookie"];
+            string user_data = user.Value;
+            Dictionary<string, object> user_vals = JsonConvert.DeserializeObject<Dictionary<string, object>>(user_data);
+            bool new_user = Convert.ToBoolean(user_vals["IsNew"]);
+            if (!new_user) { return RedirectToAction("Dashboard", "Home"); }
 
             return View();
+ 
         }
+        [HttpPost]
+        public ActionResult Welcome(NewQuestions form)
+        {
+            //Retrieve user data from cookie
+            HttpCookie user = Request.Cookies["usercookie"];
+            string user_data = user.Value;
+            Dictionary<string, object> user_vals = JsonConvert.DeserializeObject<Dictionary<string, object>>(user_data);
+
+            int userId = Convert.ToInt32(user_vals["userId"]);
+            string user_name = user_vals["username"].ToString();
+            bool new_user = Convert.ToBoolean(user_vals["IsNew"]);  
+
+            using (MyDbContext db = new MyDbContext())
+            {
+                string genres = form.v4;
+                List<string> genre_list = new List<string>();
+                if (genres != null)
+                {
+                    string[] items = genres.Split(',');
+                    foreach (string i in items)
+
+                    {
+                        genre_list.Add(i);
+                    }
+                }
+                if (ModelState.IsValid & genre_list.Count >= 3)
+                {
+                    //Declare user features for encoding
+                    List<string> user_features = new List<string>();
+                    string username = User.Identity.Name;
+                    string experience = form.v1;
+                    string gender = form.v2;
+                    string generation = form.v3;
+                    string fav_anime_period = form.v5;
+                    var fav_genres = form.v4;
+
+                    //changing the user IsNew value to false
+                    var currentuser = db.userAccount.Find(userId);
+                    currentuser.IsNew = false;
+                    db.SaveChanges();
+                    ModelState.Clear();
+
+                    //Updating the cookie with the new IsNew value
+                    user_vals["IsNew"] = false;
+                    user.Value = JsonConvert.SerializeObject(user_vals);
+                    Response.SetCookie(user);
+
+                    //Run python script to create user vector and then run k-neighbours
+                    string file = @"C:\Final Project\anime-app\new_user.py";
+                    string py = @"C:\Users\\titot\AppData\Local\Programs\Python\Python311\python.exe";
+                    //Process proc = new Process();
+                    ProcessStartInfo p = new ProcessStartInfo();
+                    p.FileName = py;
+                    p.Arguments = $"\"{file}\" \"{username}\" \"{experience}\" \"{gender}\" \"{generation}\" \"{fav_anime_period}\" \"{fav_genres}";
+                    p.UseShellExecute = false;
+                    p.CreateNoWindow = true;
+                    p.RedirectStandardOutput = true; 
+                    p.RedirectStandardError = true;
+                    var e = "";
+                    var r = "";
+                    using(var proc = Process.Start(p))
+                    {
+                        e = proc.StandardError.ReadToEnd();
+                        r = proc.StandardOutput.ReadToEnd();
+                    }
+                    return RedirectToAction("Dashboard", "Home");
+                    //return RedirectToAction("Welcome", "UserAccount", new { new_user = false });
+                }
+                else
+                {
+                    //User didnt fill out all fields. Take them back to the Welcome to try again.
+                    ViewBag.Welcome1 = "Please make sure you fill out all fields";
+                    ViewBag.Welcome2 = "";
+                    //return RedirectToAction("Welcome","Home");
+                    return View();
+                }
+            }
+        }
+
 
     }
 }
