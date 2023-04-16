@@ -15,6 +15,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Configuration;
 using System.CodeDom.Compiler;
+using System.Net.Configuration;
+using System.Xml;
 
 namespace anime_site.Controllers
 {
@@ -110,7 +112,7 @@ namespace anime_site.Controllers
                                 };
                                 string data_string = JsonConvert.SerializeObject(fields);
                                 HttpCookie usercookie = new HttpCookie("usercookie", data_string);
-                                usercookie.Expires = DateTime.Now.AddDays(1);
+                                usercookie.Expires = DateTime.Now.AddDays(100);
                                 Response.Cookies.Add(usercookie);
                                 if (username_auth.IsNew)
                                 {
@@ -195,11 +197,16 @@ namespace anime_site.Controllers
                     string gender = form.v2;
                     string generation = form.v3;
                     string fav_anime_period = form.v5;
-                    var fav_genres = form.v4;
+                    string fav_genres = form.v4;
+                    string choices = username + " " + experience + " " + gender + " " + generation + " " + fav_anime_period;
 
-                    //changing the user IsNew value to false
+                    //var r = GetRecommendations(username, experience, gender, generation, fav_anime_period, fav_genres);
+
+                    //Update database with new values
                     var currentuser = db.userAccount.Find(userId);
                     currentuser.IsNew = false;
+                    currentuser.preferences = choices;
+                    currentuser.fav_genres = fav_genres;
                     db.SaveChanges();
                     ModelState.Clear();
 
@@ -207,27 +214,8 @@ namespace anime_site.Controllers
                     user_vals["IsNew"] = false;
                     user.Value = JsonConvert.SerializeObject(user_vals);
                     Response.SetCookie(user);
-
-                    //Run python script to create user vector and then run k-neighbours
-                    string file = @"C:\Final Project\anime-app\new_user.py";
-                    string py = @"C:\Users\\titot\AppData\Local\Programs\Python\Python311\python.exe";
-                    //Process proc = new Process();
-                    ProcessStartInfo p = new ProcessStartInfo();
-                    p.FileName = py;
-                    p.Arguments = $"\"{file}\" \"{username}\" \"{experience}\" \"{gender}\" \"{generation}\" \"{fav_anime_period}\" \"{fav_genres}";
-                    p.UseShellExecute = false;
-                    p.CreateNoWindow = true;
-                    p.RedirectStandardOutput = true; 
-                    p.RedirectStandardError = true;
-                    var e = "";
-                    var r = "";
-                    using(var proc = Process.Start(p))
-                    {
-                        e = proc.StandardError.ReadToEnd();
-                        r = proc.StandardOutput.ReadToEnd();
-                    }
+                    
                     return RedirectToAction("Dashboard", "Home");
-                    //return RedirectToAction("Welcome", "UserAccount", new { new_user = false });
                 }
                 else
                 {

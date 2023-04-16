@@ -7,31 +7,32 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.neighbors import NearestNeighbors
 from sklearn.model_selection import train_test_split
 
-username = sys.argv[1]
-experience = sys.argv[2]
-gender = sys.argv[3]
-generation = sys.argv[4]
-fav_anime_period = sys.argv[5]
-fav_genres = sys.argv[6]
+preferences = sys.argv[1]
+fav = sys.argv[2]
 
-def new_user(username, experience, gender, generation, fav_anime_period, fav_genres):
+def new_user(preferences, fav_genres):
     user_vectors = pd.read_csv(r"D:\dataset\encoding\user_vectors.csv")
     
+    preferences = preferences.split(" ")
+    username, experience, gender, generation, fav_anime_period = preferences[0], preferences[1], preferences[2], preferences[3], preferences[4]
 
     #Encoding user features
     experience = load(r"C:\Final Project\anime-app\encoders\experience.pkl").transform([experience])[0]
     gender = load(r"C:\Final Project\anime-app\encoders\gender.pkl").transform([gender])[0]
     generation = load(r"C:\Final Project\anime-app\encoders\generation.pkl").transform([generation])[0]
     fav_anime_period = load(r"C:\Final Project\anime-app\encoders\fav_anime_period.pkl").transform([fav_anime_period])[0]
-  
+    
     fav_genres = fav_genres.split(',')#["Shounen","Comedy","Romance"]
     #fav_genres = fav_genres.split(' ')#console debugging
     print(f"Fav_genres are {fav_genres} from C#")
     #Vectorise genres
     descriptive_cols = pd.DataFrame({"username":[username], "experience":[experience], "gender":[gender],"generation":[generation], "fav_anime_period":[fav_anime_period]})
-    columns = ['username','Shounen', 'Seinen', 'Mystery', 'Kids', 'Parody', 'Josei', 'Shoujo', 'Fantasy', 'Sports', 'School', 'Action', 'Drama', 'Supernatural', 'Ecchi', 'Martial Arts', 'Horror', 'Sci-Fi', 'Adventure', 'Game', 'Cars', 'Romance', 'Police', 'Super Power', 'Space', 'Music', 'Military', 'Historical', 'Harem', 'Psychological', 'Samurai', 'Magic', 'Thriller', 'Slice of Life', 'Mecha', 'Vampire', 'Shounen Ai', 'Comedy']
+    columns = ['Seinen','Fantasy','Cars','Magic','Shounen','Martial Arts','Mecha','Music','Thriller','Action','Josei','Sports','School','Ecchi','Drama',
+               'Romance','Space','Shounen Ai','Parody','Shoujo Ai','Historical','Horror','Samurai','Slice of Life','Shoujo','Psychological','Dementia','Comedy','Police',
+               'Adventure','Vampire','Sci-Fi','Harem','Demons','Kids','Supernatural','Super Power','Military','Mystery','Game']
     genres = pd.DataFrame(columns=columns)
-    #p = {genre: 0 for genre in columns}
+    #print(len(columns))
+    # p = {genre: 0 for genre in columns}
     genres.loc["test"]=0
     genres["username"]=username
     row = [0]*len(columns)
@@ -61,10 +62,8 @@ def new_user(username, experience, gender, generation, fav_anime_period, fav_gen
     #print(user_vectors.iloc[241])
     return user_vectors, current_user
 
-#print(new_user(username, experience, gender, generation, fav_anime_period, fav_genres))
-
-#py new_user.py "Sanji" "Veteran" "Male" "Gen Z" "Classic" "Mystery Kids Shounen" 
-
+#print(new_user(preferences, fav)[1])
+#py new_user.py "luffy Newbie Male Gen-Z Classic" "Action,Adventure,Shounen,Romance"
 
 #function that returns a list of indexes of most similar users in "final_arrays" array
 def neighbours(user, final_arrays):
@@ -73,12 +72,12 @@ def neighbours(user, final_arrays):
     final_arrays = final_arrays.values
     #print(final_arrays[241])
     train = nc.fit(final_arrays) 
-    print("fit worked")
+    #print("fit worked")
     #print(user[0])
     n = train.kneighbors([user[0]], return_distance = False)
 
     n = [list(n[0][1:])]
-    print(n)
+    #print(n)
     #print(original.iloc[241])
     return n, final_arrays
 
@@ -91,7 +90,7 @@ def sim_frame(neighbours, final_arrays):
     for i in neighbours[0]: #loop through nested array
         #print(final_arrays[i][0])
         name = users.iloc[i]["username"]
-        print(name)
+        #print(name)
         #name = u.inverse_transform([final_arrays[i][0]]) #find usernames of similar users
         #print(final_arrays[i][2], name)
         sim_names.append(name)
@@ -127,7 +126,8 @@ def get_anime(neighbours, media_type):
         #There may be 0 movies in the user's top 10 list in which case we skip that user's recommendationan
         if len(show_ratings) > 1:
             top_rated = show_ratings.iloc[0]["title"].encode("utf-8") #change to ids when creating the website to lookup the anime
-            suggestions.append(top_rated)
+            if top_rated not in suggestions:
+                suggestions.append(top_rated)
             #print(top_rated)
 
     if len(suggestions)==0:
@@ -136,8 +136,8 @@ def get_anime(neighbours, media_type):
     return suggestions
 
 #recommendations(neighbour_frame, "TV")
-def get_recommendations(username, experience, gender, generation, fav_anime_period, fav_genres):
-    results = new_user(username, experience, gender, generation, fav_anime_period, fav_genres)
+def get_recommendations(preferences, fav):
+    results = new_user(preferences,fav)
     neighbour_ids = neighbours(np.array(results[1]), results[0])
     #print(neighbour_ids)
     neighbour_frame = sim_frame(neighbour_ids[0], neighbour_ids[1])
@@ -145,16 +145,14 @@ def get_recommendations(username, experience, gender, generation, fav_anime_peri
     return suggestions
  
 
-print(get_recommendations(username, experience, gender, generation, fav_anime_period, fav_genres))
-
-#map genres
-#Find sevral traditional genres e.g. action/adventure
-#If they pick that option fill out the fav_genres that way
+print(get_recommendations(preferences, fav))
 
 
+#save user options in database 
+#when they login, if they are not new, load those options from the database and run k-neighbours
+#move running python script to a separate method.
 
-#rewrite to make it not use "username as its affecting results"
-#1. find the iloc of the nearest neighbour ids in user_vectors
-#2. use the iloc in uservectors to find the users in user_frame
-#3. get username
-#2 1 4 124 1 options
+#load anime data into database
+#scrape anime images
+#change k-neighbours results from title to ids
+#look up recommendations in database and load images on dashboard

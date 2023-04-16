@@ -20,6 +20,10 @@ namespace anime_site.Models
 
         public bool IsNew { get; set; }
 
+        public string preferences { get; set; }
+
+        public string fav_genres { get; set; }  
+
         [NotMapped]
         public string ConfirmPassword { get; set; }
 
