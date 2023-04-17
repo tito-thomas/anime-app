@@ -148,10 +148,6 @@ def get_recommendations(preferences, fav):
 print(get_recommendations(preferences, fav))
 
 
-#save user options in database 
-#when they login, if they are not new, load those options from the database and run k-neighbours
-#move running python script to a separate method.
-
 #load anime data into database
 #scrape anime images
 #change k-neighbours results from title to ids

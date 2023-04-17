@@ -8,10 +8,13 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 import urllib.request
 import time
+import pandas as pd
 
 def scraper(size):
     # Define the list of anime shows to search for
-    anime_list = ["Fullmetal Alchemist (TV)", "Death Note (TV)", "Cowboy Bebop (TV)", "Spirited Away (movie)", "Princess Mononoke (movie)", "(The) Melancholy of Haruhi Suzumiya (TV)", "Elfen Lied (TV)", "Neon Genesis Evangelion (TV)", "Code Geass: Lelouch of the Rebellion (TV)", "Bleach (TV)", "Code Geass: Lelouch of the Rebellion R2 (TV)"]
+    a = pd.read_csv(r"D:\dataset\encoding\anime_frame.csv")
+    #anime_list = ["Fullmetal Alchemist (TV)", "Death Note (TV)", "Cowboy Bebop (TV)", "Spirited Away (movie)", "Princess Mononoke (movie)", "(The) Melancholy of Haruhi Suzumiya (TV)", "Elfen Lied (TV)", "Neon Genesis Evangelion (TV)", "Code Geass: Lelouch of the Rebellion (TV)", "Bleach (TV)", "Code Geass: Lelouch of the Rebellion R2 (TV)"]
+    anime_list = a["title"]
     serv = Service(r"C:\Users\titot\AppData\Local\Google\Chrome\Application\chromedriver.exe")
     driver = webdriver.Chrome(service=serv)
     dims = ""
@@ -25,8 +28,8 @@ def scraper(size):
             os.makedirs('anime_covers_large')
 
 
-    for anime in anime_list:
-        search_terms = anime + ' anime cover'
+    for anime in a.iterrows():
+        search_terms = anime[1][1] + ' anime cover' #anime title + anime cover
         encoded_terms = urllib.parse.quote(search_terms, safe=":/")
         full_url = 'https://www.google.com/search?tbm=isch&q='+encoded_terms+dims+"&tbs=ift:jpg"
         driver.get(full_url)
@@ -37,7 +40,7 @@ def scraper(size):
             button[0].click()
         img_elements = driver.find_elements(By.CSS_SELECTOR,'a.wXeWr')
         #time.sleep(3)
-        print(anime)
+        #print(anime)
         print(f"{len(img_elements)} small images")
         first_image = img_elements[0]
         first_image.click()
@@ -51,11 +54,12 @@ def scraper(size):
         driver.get(img_link)
         #print(img_link)
         
-        img_urlx = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'img.n3VNCb.pT0Scc.KAlRDb')))
+        img_urlx = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'img.r48jcc.pT0Scc.iPVvYb')))
         img_url = img_urlx.get_attribute("src")
         print(img_url)
         #save image to folder
-        img_name = anime.replace(' ', '_') + ".jpg"
+        #img_name = anime[1][1].replace(' ', '_') + ".jpg"
+        img_name = str(anime[1][0]) + ".jpg" #anime_id.jpg
         img_path = os.path.join('anime_covers_large', img_name)
         urllib.request.urlretrieve(img_url, img_path)
 
