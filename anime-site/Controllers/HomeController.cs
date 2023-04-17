@@ -48,14 +48,30 @@ namespace anime_site.Controllers
                     string p = currentuser.preferences;
                     string f = currentuser.fav_genres;
                     var recs = GetRecommendations(p, f);
-                    ViewBag.Recs = recs;
+
+                    var nums = recs.Trim('[', ']',' ','\t', '\n', '\r').Split(',');
+                    List<string> pathlist = new List<string> { };     
+                    for(int i=0; i< nums.Length; i++)
+                    {
+                        int.TryParse(nums[i], out int id);
+                        var anime = db.animeMap.Find(id);
+                        string imgpath = anime.image;
+                        pathlist.Add(imgpath);
+                    }
+                    ViewBag.Rec1 = pathlist[0];
+                    ViewBag.Rec2 = pathlist[1];
+                    ViewBag.Rec3 = pathlist[2];
+                    ViewBag.Rec4 = pathlist[3];
+                    ViewBag.Rec5 = pathlist[4];
+                    ViewBag.Welcome = user_name;  
+
                     return View();
                 }
             }
             return RedirectToAction("Logout","UserAccount");
         }
 
-        public object GetRecommendations(string preferences, string favgenres)
+        public string GetRecommendations(string preferences, string favgenres)
         {
             //Run python script to create user vector and then run k-neighbours
             string file = @"C:\Final Project\anime-app\new_user.py";

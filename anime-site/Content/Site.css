@@ -519,3 +519,39 @@ h1{
     transform: translateY(50px);
     overflow-y: auto;
 }
+
+/*Dashboard Styling*/
+
+.rec-container {
+    display: flex;
+    height: 500px;
+    width: 1850px;
+    flex-direction: row;
+    column-gap: 50px;
+    padding: 20px;
+    transform: translate(50px,-200px);
+}
+
+.dash-header{
+    font-family:Poppins;
+    padding:20px;
+    width:300px;
+    transform:translateY(-160px);
+}
+
+.dash-header h1{
+    width:500px;
+}
+
+.dash-title {
+    font-family: Poppins;
+    padding: 20px;
+    font-size: 50px;
+    width: 700px;
+    transform: translate(600px,-250px);
+}
+
+.rec-img{
+    border-radius:30px;
+    width:320px;
+}

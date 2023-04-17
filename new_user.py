@@ -24,7 +24,7 @@ def new_user(preferences, fav_genres):
     
     fav_genres = fav_genres.split(',')#["Shounen","Comedy","Romance"]
     #fav_genres = fav_genres.split(' ')#console debugging
-    print(f"Fav_genres are {fav_genres} from C#")
+    #print(f"Fav_genres are {fav_genres} from C#")
     #Vectorise genres
     descriptive_cols = pd.DataFrame({"username":[username], "experience":[experience], "gender":[gender],"generation":[generation], "fav_anime_period":[fav_anime_period]})
     columns = ['Seinen','Fantasy','Cars','Magic','Shounen','Martial Arts','Mecha','Music','Thriller','Action','Josei','Sports','School','Ecchi','Drama',
@@ -125,7 +125,7 @@ def get_anime(neighbours, media_type):
         
         #There may be 0 movies in the user's top 10 list in which case we skip that user's recommendationan
         if len(show_ratings) > 1:
-            top_rated = show_ratings.iloc[0]["title"].encode("utf-8") #change to ids when creating the website to lookup the anime
+            top_rated = show_ratings.iloc[0]["anime_id"]#.encode("utf-8") #change to ids when creating the website to lookup the anime
             if top_rated not in suggestions:
                 suggestions.append(top_rated)
             #print(top_rated)

@@ -4,10 +4,20 @@
     ViewBag.Title = "Dashboard";
 }
 
-<h2>Dashboard</h2>
+@section Scripts {
+    <script type="module" src="~/Scripts/movement.js"></script>
+}
 
-<div>
-    <h4>UserDetails</h4>
-    <p>@ViewBag.Recs </p>
+<div class="dash-header">
+    <h2>Dashboard</h2>
+    <h4>Welcome, @ViewBag.Welcome</h4>
+</div>
+<h1 class="dash-title">Top suggestions for you</h1>
+<div class="rec-container">
 
+    <img class="rec-img" src="@ViewBag.Rec5" />
+    <img class="rec-img" src="@ViewBag.Rec4" />
+    <img class="rec-img" src="@ViewBag.Rec1" />
+    <img class="rec-img" src="@ViewBag.Rec2" />
+    <img class="rec-img" src="@ViewBag.Rec3" />
 </div>
