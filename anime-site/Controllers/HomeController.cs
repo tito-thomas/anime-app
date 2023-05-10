@@ -63,12 +63,13 @@ namespace anime_site.Controllers
                     ViewBag.Rec3 = pathlist[2];
                     ViewBag.Rec4 = pathlist[3];
                     ViewBag.Rec5 = pathlist[4];
+                    //you dont always get 5 recs
                     ViewBag.Welcome = user_name;  
 
                     return View();
                 }
             }
-            return RedirectToAction("Logout","UserAccount");
+            return RedirectToAction("Logout","UserAccount");//check whats wrong with cookie
         }
 
         public string GetRecommendations(string preferences, string favgenres)

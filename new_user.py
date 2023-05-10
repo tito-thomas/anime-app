@@ -146,9 +146,3 @@ def get_recommendations(preferences, fav):
  
 
 print(get_recommendations(preferences, fav))
-
-
-#load anime data into database
-#scrape anime images
-#change k-neighbours results from title to ids
-#look up recommendations in database and load images on dashboard
