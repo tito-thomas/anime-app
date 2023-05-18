@@ -135,6 +135,37 @@ def get_anime(neighbours, media_type):
     
     return suggestions
 
+#COLLABORATIVE FILTERING
+
+def r_neighbours(anime, rating_vectors):
+    #euclidean #find 2 most similar anime to each of the inital 5 recommendations
+    nc = NearestNeighbors(n_neighbors = 2, metric="cosine") 
+    train = nc.fit(rating_vectors.values) #fit the model with the ratings data
+    n = train.kneighbors([anime], return_distance = False)
+    return n
+
+def r_neighbour_ids(initial):
+    rating_vectors = pd.read_csv(r"D:\dataset\encoding\collab_scores.csv")
+    n_ids = []
+    for r in initial:
+        a_vector = list(rating_vectors.loc[rating_vectors["anime_id"]==r].values)
+        n_indexes = r_neighbours(a_vector[0], rating_vectors)[0]
+        for i in n_indexes:
+            anime_id = rating_vectors.iloc[i]["anime_id"]
+            n_ids.append(anime_id)
+    return n_ids
+
+def get_additional_anime(initial):
+    anime_frame = pd.read_csv(r"D:\dataset\encoding\anime_frame.csv")
+    more_recs = pd.DataFrame()
+    for i in r_neighbour_ids(initial):
+        anime_row = anime_frame.loc[anime_frame["anime_id"]==i]
+        more_recs = pd.concat([more_recs, anime_row])
+        more_recs = more_recs.loc[:,["anime_id","title","studio", "genre","time_period", "fame"]]
+    #exclude the first anime (the show being compared to)
+    #more_recs=more_recs[1:]
+    return list(more_recs["anime_id"])
+
 #recommendations(neighbour_frame, "TV")
 def get_recommendations(preferences, fav):
     results = new_user(preferences,fav)
@@ -142,7 +173,8 @@ def get_recommendations(preferences, fav):
     #print(neighbour_ids)
     neighbour_frame = sim_frame(neighbour_ids[0], neighbour_ids[1])
     suggestions = get_anime(neighbour_frame, "TV")
-    return suggestions
+    more_anime = get_additional_anime(suggestions)
+    return suggestions + more_anime
  
 
 print(get_recommendations(preferences, fav))

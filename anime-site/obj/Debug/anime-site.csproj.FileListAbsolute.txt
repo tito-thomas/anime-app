@@ -79,6 +79,8 @@ D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.cs
 D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.CopyComplete
 D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.dll
 D:\Master File\Year 3\Final Project\anime-app\anime-site\obj\Debug\anime-site.pdb
+C:\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.AssemblyReference.cache
+C:\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.CoreCompileInputs.cache
 C:\Final Project\anime-app\anime-site\bin\anime-site.dll.config
 C:\Final Project\anime-app\anime-site\bin\anime-site.dll
 C:\Final Project\anime-app\anime-site\bin\anime-site.pdb
@@ -155,8 +157,6 @@ C:\Final Project\anime-app\anime-site\bin\System.Web.WebPages.Razor.xml
 C:\Final Project\anime-app\anime-site\bin\Newtonsoft.Json.xml
 C:\Final Project\anime-app\anime-site\bin\Antlr3.Runtime.pdb
 C:\Final Project\anime-app\anime-site\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.AssemblyReference.cache
-C:\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.CoreCompileInputs.cache
 C:\Final Project\anime-app\anime-site\obj\Debug\anime-site.csproj.CopyComplete
 C:\Final Project\anime-app\anime-site\obj\Debug\anime-site.dll
 C:\Final Project\anime-app\anime-site\obj\Debug\anime-site.pdb

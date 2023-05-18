@@ -274,7 +274,7 @@ h1{
 
 .home-background::before {
     content: "";
-    background-image: url("/Content/Assets/valley.jpg");
+    background-image: url("/Content/Assets/luffy.jpg");
     position: fixed;
     top: 0;
     left: 0;
@@ -525,11 +525,12 @@ h1{
 .rec-container {
     display: flex;
     height: 500px;
+    overflow-y: hidden;
     width: 1850px;
     flex-direction: row;
     column-gap: 50px;
     padding: 20px;
-    transform: translate(50px,-200px);
+    transform: translate(50px, -100px);
 }
 
 .dash-header{
@@ -554,4 +555,21 @@ h1{
 .rec-img{
     border-radius:30px;
     width:320px;
+}
+
+.more-img {
+    border-radius: 30px;
+    width: 220px;
+    height:220px;
+}
+
+.add-container {
+    display: flex;
+    height: 280px;
+    overflow-y: hidden;
+    width: 1850px;
+    flex-direction: row;
+    column-gap: 50px;
+    padding: 20px;
+    transform: translate(50px, -100px);
 }

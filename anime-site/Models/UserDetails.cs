@@ -30,3 +30,4 @@ namespace anime_site.Models
 
     }
 }
+

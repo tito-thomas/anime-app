@@ -47,23 +47,22 @@ namespace anime_site.Controllers
                     var currentuser = db.userAccount.Find(userId);
                     string p = currentuser.preferences;
                     string f = currentuser.fav_genres;
-                    var recs = GetRecommendations(p, f);
+                    List<int> recs = GetRecommendations(p, f);
 
-                    var nums = recs.Trim('[', ']',' ','\t', '\n', '\r').Split(',');
+                    //var nums = recs.Trim('[', ']',' ','\t', '\n', '\r').Split(',');
                     List<string> pathlist = new List<string> { };     
-                    for(int i=0; i< nums.Length; i++)
+                    for(int i=0; i< recs.Count; i++)
                     {
-                        int.TryParse(nums[i], out int id);
-                        var anime = db.animeMap.Find(id);
+                        //int.TryParse(recs[i], out int id);
+                        var anime = db.animeMap.Find(recs[i]);
                         string imgpath = anime.image;
                         pathlist.Add(imgpath);
+
+                        ViewData[string.Format("Rec{0}", i + 1)] = imgpath;
                     }
-                    ViewBag.Rec1 = pathlist[0];
-                    ViewBag.Rec2 = pathlist[1];
-                    ViewBag.Rec3 = pathlist[2];
-                    ViewBag.Rec4 = pathlist[3];
-                    ViewBag.Rec5 = pathlist[4];
                     //you dont always get 5 recs
+   
+                    
                     ViewBag.Welcome = user_name;  
 
                     return View();
@@ -72,7 +71,7 @@ namespace anime_site.Controllers
             return RedirectToAction("Logout","UserAccount");//check whats wrong with cookie
         }
 
-        public string GetRecommendations(string preferences, string favgenres)
+        public List<int> GetRecommendations(string preferences, string favgenres)
         {
             //Run python script to create user vector and then run k-neighbours
             string file = @"C:\Final Project\anime-app\new_user.py";
@@ -91,8 +90,10 @@ namespace anime_site.Controllers
             {
                 e = proc.StandardError.ReadToEnd();
                 r = proc.StandardOutput.ReadToEnd();
+                List<int> cont_recs = JsonConvert.DeserializeObject<List<int>>(r);
+                return cont_recs;
             }
-            return r;
+          
         }
     }
 }

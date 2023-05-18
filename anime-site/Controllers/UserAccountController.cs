@@ -31,8 +31,8 @@ namespace anime_site.Controllers
 
         [HttpPost]
         public ActionResult Register(UserDetails user)
-        {
-            if (ModelState.IsValid) { //model is invalid if one or more fields are blank
+        {//model is invalid if one or more fields are blank
+            if (ModelState.IsValid) { 
                 using (MyDbContext db = new MyDbContext()) {
                     //If the username is taken, try again
                     if (db.userAccount.Any(i => i.username == user.username))
@@ -86,13 +86,12 @@ namespace anime_site.Controllers
         public ActionResult Login(UserDetails user)
         {
             {
+         //model is invalid if one or more fields are blank
                 
-                if (ModelState.IsValid) //model is invalid if one or more fields are blank
+                if (ModelState.IsValid) 
                 {
                     using (MyDbContext db = new MyDbContext())
                     {
-                        //var current_hashed = Crypto.HashPassword(user.password);
-                        //var auth = db.RegAccount.Where(i => i.username.Equals(user.username) && i.password.Equals(user.password)).FirstOrDefault();
                         var username_auth = db.userAccount.Where(i => i.username.Equals(user.username)).FirstOrDefault();
                         if (username_auth != null)
                         {
