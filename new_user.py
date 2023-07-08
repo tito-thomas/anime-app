@@ -6,13 +6,15 @@ import sys
 from sklearn.preprocessing import LabelEncoder
 from sklearn.neighbors import NearestNeighbors
 from sklearn.model_selection import train_test_split
+import time
+from time import perf_counter
+import datatable as dt
 
 preferences = sys.argv[1]
 fav = sys.argv[2]
 
 def new_user(preferences, fav_genres):
     user_vectors = pd.read_csv(r"D:\dataset\encoding\user_vectors.csv")
-    
     preferences = preferences.split(" ")
     username, experience, gender, generation, fav_anime_period = preferences[0], preferences[1], preferences[2], preferences[3], preferences[4]
 
@@ -139,20 +141,31 @@ def get_anime(neighbours, media_type):
 
 def r_neighbours(anime, rating_vectors):
     #euclidean #find 2 most similar anime to each of the inital 5 recommendations
-    nc = NearestNeighbors(n_neighbors = 2, metric="cosine") 
+    nc = NearestNeighbors(n_neighbors = 3, metric="cosine") 
     train = nc.fit(rating_vectors.values) #fit the model with the ratings data
     n = train.kneighbors([anime], return_distance = False)
     return n
 
 def r_neighbour_ids(initial):
+    print("reading ratings")
+    start = time.perf_counter()
     rating_vectors = pd.read_csv(r"D:\dataset\encoding\collab_scores.csv")
+    #rating_vectors = dt.fread(r"D:\dataset\encoding\collab_scores.csv").to_pandas()
+    one = time.perf_counter()
+    print(f"Initial: {np.around((one-start),2)}s")
+
+    print("done with ratings")
     n_ids = []
     for r in initial:
         a_vector = list(rating_vectors.loc[rating_vectors["anime_id"]==r].values)
         n_indexes = r_neighbours(a_vector[0], rating_vectors)[0]
+        n_indexes = n_indexes[1:]
         for i in n_indexes:
             anime_id = rating_vectors.iloc[i]["anime_id"]
             n_ids.append(anime_id)
+        
+    two = time.perf_counter()
+    print(f"Last: {np.around((two-one),2)}s")
     return n_ids
 
 def get_additional_anime(initial):
@@ -162,18 +175,29 @@ def get_additional_anime(initial):
         anime_row = anime_frame.loc[anime_frame["anime_id"]==i]
         more_recs = pd.concat([more_recs, anime_row])
         more_recs = more_recs.loc[:,["anime_id","title","studio", "genre","time_period", "fame"]]
+
     #exclude the first anime (the show being compared to)
     #more_recs=more_recs[1:]
     return list(more_recs["anime_id"])
 
 #recommendations(neighbour_frame, "TV")
 def get_recommendations(preferences, fav):
+    start_time = time.perf_counter()
     results = new_user(preferences,fav)
     neighbour_ids = neighbours(np.array(results[1]), results[0])
     #print(neighbour_ids)
     neighbour_frame = sim_frame(neighbour_ids[0], neighbour_ids[1])
     suggestions = get_anime(neighbour_frame, "TV")
+
+    one = time.perf_counter()
+    #print(f"Initial: {np.around((one-start_time),2)}s")
+
     more_anime = get_additional_anime(suggestions)
+    two = time.perf_counter()
+    #print(f"Additional: {np.around((two-one),2)}s")
+
+    end_time = time.perf_counter()
+    #print(f"Total: {np.around((end_time-start_time),2)}s")
     return suggestions + more_anime
  
 

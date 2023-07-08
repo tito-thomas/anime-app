@@ -48,8 +48,6 @@ namespace anime_site.Controllers
                     string p = currentuser.preferences;
                     string f = currentuser.fav_genres;
                     List<int> recs = GetRecommendations(p, f);
-
-                    //var nums = recs.Trim('[', ']',' ','\t', '\n', '\r').Split(',');
                     List<string> pathlist = new List<string> { };     
                     for(int i=0; i< recs.Count; i++)
                     {
@@ -76,7 +74,6 @@ namespace anime_site.Controllers
             //Run python script to create user vector and then run k-neighbours
             string file = @"C:\Final Project\anime-app\new_user.py";
             string py = @"C:\Users\\titot\AppData\Local\Programs\Python\Python311\python.exe";
-            //Process proc = new Process();
             ProcessStartInfo p = new ProcessStartInfo();
             p.FileName = py;
             p.Arguments = $"\"{file}\" \"{preferences}\" \"{favgenres}";
