@@ -10,24 +10,27 @@
     }
 }*/
 
+if (document.URL.includes("Welcome")) {
+    //stop buttons from redirecting
+    const selections = document.querySelector(".qbuttons");
+    selections.addEventListener("click", function (event) {
+        event.preventDefault();
 
-//stop buttons from redirecting
-const selections = document.querySelector(".qbuttons");
-selections.addEventListener("click", function (event) {
-    event.preventDefault();
-
-});
+    });
+}
 
 
 function checkLoggedIn() {
 
     var url = document.URL.split('/')
     //Check if user is logged in
-    if (document.URL.includes("Welcome")) {
+    if (document.URL.includes("Welcome") || document.URL.includes("Dashboard")) {
         const navbar = document.querySelector("#mynav")
         navbar.style.display = "flex"
-        navbar.style.backgroundColor = "#0e113a"
-
+        if (document.URL.includes("Welcome")){
+            navbar.style.backgroundColor = "#0e113a"
+        }
+        else { navbar.style.backgroundColor = "rgb(128 195 132)"}
         //window.addEventListener("scroll", homeNavStyling)
         return true;
     }

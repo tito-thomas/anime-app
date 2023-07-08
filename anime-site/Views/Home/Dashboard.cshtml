@@ -4,35 +4,34 @@
     ViewBag.Title = "Dashboard";
 }
 
-<h2>Dashboard</h2>
+@section Scripts {
+    <script type="module" src="~/Scripts/movement.js"></script>
+}
 
-<div>
-    <h4>UserDetails</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.username)
-        </dt>
+<div class="dash-header">
+    <h2>Dashboard</h2>
+    <h4>Welcome, @ViewBag.Welcome</h4>
+</div>
+<h1 class="dash-title">Top suggestions for you</h1>
+<div class="rec-container">
 
-        <dd>
-            @Html.DisplayFor(model => model.username)
-        </dd>
+    <img class="rec-img" src="@ViewData["Rec5"]" />
+    <img class="rec-img" src="@ViewData["Rec4"]" />
+    <img class="rec-img" src="@ViewData["Rec1"]" />
+    <img class="rec-img" src="@ViewData["Rec2"]" />
+    <img class="rec-img" src="@ViewData["Rec3"]" />
+</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.password)
-        </dt>
+<div class="add-container">
 
-        <dd>
-            @Html.DisplayFor(model => model.password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsNew)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsNew)
-        </dd>
-
-    </dl>
+    <img class="more-img" src="@ViewData["Rec6"]" />
+    <img class="more-img" src="@ViewData["Rec7"]" />
+    <img class="more-img" src="@ViewData["Rec8"]" />
+    <img class="more-img" src="@ViewData["Rec9"]" />
+    <img class="more-img" src="@ViewData["Rec10"]" />
+    <img class="more-img" src="@ViewData["Rec11"]" />
+    <img class="more-img" src="@ViewData["Rec12"]" />
+    <img class="more-img" src="@ViewData["Rec13"]" />
+    <img class="more-img" src="@ViewData["Rec14"]" />
+    <img class="more-img" src="@ViewData["Rec15"]" />
 </div>
